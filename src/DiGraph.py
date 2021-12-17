@@ -5,17 +5,20 @@ from src.Node import Node
 
 class DiGraph(GraphInterface):
 
-    def __init__(self, name, nodes, edges):
-        self._name = name
-        self._nodes = dict(nodes)
-        for edge in edges:
-            node1 = self._nodes[str(edge.getSrcNode())]
-            node1.addEdge(edge)
-            node2 = self._nodes[str(edge.getDestNode())]
-            node2.addEdge(edge)
-        #self._nodeEdges = nodeEdges
-        self._edges = list(edges)
+    def __init__(self):
+        self._nodes = {}
+        self._edges = []
         self.mc = 0
+
+    # def __init__(self, nodes, edges):
+    #     self._nodes = dict(nodes)
+    #     for edge in edges:
+    #         node1 = self._nodes[str(edge.getSrcNode())]
+    #         node1.addEdge(edge)
+    #         node2 = self._nodes[str(edge.getDestNode())]
+    #         node2.addEdge(edge)
+    #     self._edges = list(edges)
+    #     self.mc = 0
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         newNode = Node(node_id, pos)
