@@ -7,7 +7,6 @@ class Edge:
         self._w = weight
         self._destNode = destNode
 
-
     # getters
     def getSrcNode(self):
         return self._srcNode

@@ -2,18 +2,24 @@ from src import Edge
 
 
 class Node:
-    def __init__(self, key, location, edgesToNode, edgesFromNode, tag):
+    def __init__(self, key, location):
         self._key = key
-        self._location = location
-        self._edgesToNode = edgesToNode
-        self._edgesFromNode = edgesFromNode
-        self._tag = tag
+        self._location = tuple(location)
+        self._edgesToNode = {}
+        self._edgesFromNode = {}
+        self._tag = 0
 
     def addEdge(self, edge: Edge):
-        if edge.getSrc() == self._key:
-            self._edgesFromNode.append(edge)
-        elif edge.getDest() == self._key:
-            self._edgesToNode.append(edge)
+        if edge.getSrcNode() == self._key:
+            self._edgesFromNode[str(edge.getDestNode())] = edge.getWeight()
+        elif edge.getDestNode() == self._key:
+            self._edgesToNode[str(edge.getSrcNode())] = edge.getWeight()
+
+    def removeEdge(self, edge: Edge):
+        if edge.getSrcNode() == self._key:
+            del self._edgesFromNode[str(edge.getDestNode())]
+        elif edge.getDestNode() == self._key:
+            del self._edgesToNode[str(edge.getSrcNode())]
 
     # getters
     def getKey(self):

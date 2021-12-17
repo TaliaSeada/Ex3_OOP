@@ -4,7 +4,8 @@ from src.Node import Node
 
 
 class DiGraph(GraphInterface):
-    def __init__(self, name, nodes, nodeEdges, edges):
+
+    def __init__(self, name, nodes, edges):
         self._name = name
         self._nodes = dict(nodes)
         for edge in edges:
