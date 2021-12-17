@@ -2,7 +2,7 @@ from src import Node
 
 
 class Edge:
-    def __init__(self, srcNode, weight, destNode):
+    def __init__(self, srcNode: int, weight: float, destNode: int):
         self._srcNode = srcNode
         self._w = weight
         self._destNode = destNode
