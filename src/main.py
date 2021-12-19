@@ -108,7 +108,7 @@ def check3():
 if __name__ == '__main__':
     # check()
     algo = GraphAlgo()
-    algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/1000Nodes.json')
+    algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/A0.json')
     #print(algo.isConnected())
     list = [1, 7, 5, 3]
     start_Time = time.time_ns()
