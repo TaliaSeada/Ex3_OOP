@@ -105,4 +105,22 @@ def check3():
 
 
 if __name__ == '__main__':
-    check()
+    # check()
+    algo = GraphAlgo()
+    algo.load_from_json('C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\A0.json')
+    print(algo.isConnected())
+    print(algo.centerPoint())
+    # print(algo.bfs(0, algo.graph))
+    # print(algo.get_graph().get_all_v())
+    # print(algo.get_graph().all_out_edges_of_node(0))
+    # print(algo.get_graph().all_in_edges_of_node(0))
+    #
+    # print(algo.reverse_graph(algo.get_graph()).get_all_v())
+    # print(algo.reverse_graph(algo.get_graph()).all_out_edges_of_node(0))
+    # print(algo.reverse_graph(algo.get_graph()).all_in_edges_of_node(0))
+
+    # print(algo.dijkstra(0))
+    # print(algo.shortest_path(0, 4))
+    # print(algo.shortest_path(0, 12))
+    # algo.save_to_json("test.json")
+

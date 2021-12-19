@@ -21,6 +21,9 @@ class DiGraph(GraphInterface):
     #     self._edges = list(edges)
     #     self.mc = 0
 
+    def get_graph(self):
+        return self
+
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         newNode = Node(node_id, pos)
         if str(node_id) not in self._nodes.keys():
