@@ -20,8 +20,46 @@ class GraphAlgo(GraphAlgoInterface):
     def get_graph(self) -> GraphInterface:
         return self._graph
 
+    def min_index(self, srcNode, dist_v, node_lst, passed):
+        min = float('inf')
+        index = 0
+        for key in node_lst:
+            if dist_v.get(str(key)) < min and key != srcNode and key not in passed:
+                index = int(key)
+                min = dist_v.get(str(key))
+        return index
+
     def TSP(self, node_lst: List[int]) -> (List[int], float):
-        pass
+        # Iterate over the given list and run the Dijkstra function on the first node.
+        # After running once on a node, take the shortest path to a node (it's inside the list).
+        # Then, run again, but now on the node we took from the last iteration.
+        # The function stops when we passed all the nodes.
+
+        dist = 0
+        path = []
+
+        passed = []
+        v = node_lst[0]
+        while len(passed) != len(node_lst) - 1:
+            if v in node_lst:
+                passed.append(v)
+            # get all shortest path's to the node v
+            dist_v, path_v = self.dijkstra(v)
+            # then get the index of the shortest of them all
+            min_ind = self.min_index(v, dist_v, node_lst, passed)
+            # and take the path between the two nodes to the main path
+            f, currPath = self.shortest_path(v, min_ind)
+            for p in currPath:
+                if len(path) == 0:
+                    path.append(p)
+                    continue
+                elif path[-1] != p:
+                    path.append(p)
+            # finally increase the dist by the distance between the two nodes
+            dist += dist_v.get(str(min_ind))
+            v = min_ind
+
+        return path, dist
 
     def bfs(self, nodeKey: int, g: DiGraph):
         D = {v: float('inf') for v in self._graph.get_all_v().keys()}
