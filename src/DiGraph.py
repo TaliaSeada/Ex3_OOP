@@ -8,6 +8,7 @@ class DiGraph(GraphInterface):
     def __init__(self):
         self._nodes = {}
         self._edges = []
+        self.visited = []
         self.mc = 0
 
     # def __init__(self, nodes, edges):
@@ -104,3 +105,4 @@ class DiGraph(GraphInterface):
 
     def v_size(self) -> int:
         return len(self._nodes)
+
