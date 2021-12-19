@@ -212,7 +212,7 @@ class GraphAlgo(GraphAlgoInterface):
                 return float('inf'), p
             id = id2
             p.append(id)
-            while id != id1:
+            while int(id) != id1:
                 p.append(int(path[str(id)]))
                 id = path[str(id)]
             p.reverse()

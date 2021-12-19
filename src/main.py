@@ -110,8 +110,9 @@ if __name__ == '__main__':
     algo = GraphAlgo()
     algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/1000Nodes.json')
     #print(algo.isConnected())
+    list = [1, 7, 5, 3]
     start_Time = time.time_ns()
-    print(algo.centerPoint())
+    print(algo.TSP(list))
     end_Time = time.time_ns()
     print("second to check: " + str(end_Time-start_Time))
     # print(algo.bfs(0, algo.graph))
