@@ -1,5 +1,6 @@
 from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
+import time
 
 
 def check():
@@ -107,9 +108,12 @@ def check3():
 if __name__ == '__main__':
     # check()
     algo = GraphAlgo()
-    algo.load_from_json('C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\A0.json')
-    print(algo.isConnected())
+    algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/1000Nodes.json')
+    #print(algo.isConnected())
+    start_Time = time.time_ns()
     print(algo.centerPoint())
+    end_Time = time.time_ns()
+    print("second to check: " + str(end_Time-start_Time))
     # print(algo.bfs(0, algo.graph))
     # print(algo.get_graph().get_all_v())
     # print(algo.get_graph().all_out_edges_of_node(0))

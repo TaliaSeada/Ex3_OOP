@@ -1,4 +1,5 @@
-import io
+import time
+from heapq import *
 from typing import List
 import json
 from queue import PriorityQueue
@@ -13,6 +14,7 @@ from src.Edge import Edge
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self):
+        self._revGraph = DiGraph()
         self._graph = DiGraph()
 
     def get_graph(self) -> GraphInterface:
@@ -70,24 +72,27 @@ class GraphAlgo(GraphAlgoInterface):
         bfs = self.bfs(key, self._graph)
         if bfs == float('inf'):
             return False
-        bfs_rev = self.bfs(key, self.reverse_graph(self._graph))
+        bfs_rev = self.bfs(key, self._revGraph)
         if bfs_rev == float('inf'):
             return False
         return True
 
     def centerPoint(self) -> (int, float):
         if self.isConnected():
-            longest = {v: float('inf') for v in self._graph.get_all_v().keys()}
+            minDist = float('inf')
+            minIndex = -1
             for v in self._graph.get_all_v().keys():
-                dist, path = self.dijkstra(int(v))
-                longest[v] = max(dist.values())
-            min_index = float('inf')
-            index = -1
-            for key in longest.keys():
-                if longest[key] < min_index:
-                    min_index = longest[key]
-                    index = int(key)
-            return index, min_index
+                dist, path = self.dijkstra2(int(v), minDist)
+                if max(dist.values()) < minDist:
+                    minDist = max(dist.values())
+                    minIndex = int(v)
+            # min_index = float('inf')
+            # index = -1
+            # for key in longest.keys():
+            #     if longest[key] < min_index:
+            #         min_index = longest[key]
+            #         index = int(key)
+            return minIndex, minDist
         else:
             return -1, float('inf')
 
@@ -102,11 +107,13 @@ class GraphAlgo(GraphAlgoInterface):
                 for i in range(len(xyz)):
                     xyz[i] = float(xyz[i])
                 self._graph.add_node(id, xyz)
+                self._revGraph.add_node(id, xyz)
             for i in data["Edges"]:
                 src = int(i["src"])
                 dest = int(i["dest"])
                 weight = float(i["w"])
                 self._graph.add_edge(src, dest, weight)
+                self._revGraph.add_edge(dest, src, weight)
             return True
         except Exception as e:
             print(e)
@@ -141,30 +148,61 @@ class GraphAlgo(GraphAlgoInterface):
             print(e)
             return False
 
-    def dijkstra(self, id1: int):
-        D = {v: float('inf') for v in self._graph.get_all_v().keys()}
-        D[str(id1)] = 0
-        path = {v: None for v in self._graph.get_all_v().keys()}
+    # def dijkstra(self, id1: int):
+    #     print(id1)
+    #     D = {}
+    #     path = {}
+    #     for v in self._graph.get_all_v().keys():
+    #         D[v] = float('inf')
+    #         path[v] = None
+    #     D[str(id1)] = 0
+    #
+    #     pq = PriorityQueue()
+    #     pq.put((0, id1))
+    #
+    #     while not pq.empty():
+    #         (dist, current) = pq.get()
+    #         self._graph.visited.append(current)
+    #
+    #         for neighbor in self._graph.get_all_v().keys():
+    #             if self._graph.all_out_edges_of_node(current).__contains__(neighbor):
+    #                 distance = self._graph.all_out_edges_of_node(current)[neighbor]
+    #                 if neighbor not in self._graph.visited:
+    #                     old_cost = D[neighbor]
+    #                     new_cost = D[str(current)] + distance
+    #                     if new_cost < old_cost:
+    #                         pq.put((new_cost, neighbor))
+    #                         path[neighbor] = str(current)
+    #                         D[neighbor] = new_cost
+    #     self._graph.visited = []
+    #     return D, path
 
-        pq = PriorityQueue()
-        pq.put((0, id1))
-
-        while not pq.empty():
-            (dist, current) = pq.get()
-            self._graph.visited.append(current)
-
-            for neighbor in self._graph.get_all_v().keys():
-                if self._graph.all_out_edges_of_node(current).__contains__(neighbor):
-                    distance = self._graph.all_out_edges_of_node(current)[neighbor]
-                    if neighbor not in self._graph.visited:
-                        old_cost = D[neighbor]
-                        new_cost = D[str(current)] + distance
-                        if new_cost < old_cost:
-                            pq.put((new_cost, neighbor))
-                            path[neighbor] = str(current)
-                            D[neighbor] = new_cost
+    def dijkstra(self, src: int):
+        print(src)
+        Distances = {}
+        lastPath = {}
+        for v in self._graph.get_all_v():
+            Distances[v] = float('inf')
+            lastPath[v] = None
+        Distances[str(src)] = 0
+        h = []
+        heappush(h, (Distances[str(src)], str(src)))
+        while h:
+            currNode = heappop(h)[1]
+            self._graph.visited.append(currNode)
+            outEdges = self._graph.all_out_edges_of_node(int(currNode))
+            for edge in outEdges.keys():
+                if edge not in self._graph.visited:
+                    currDist = Distances.get(edge)
+                    newDist = Distances.get(currNode) + outEdges.get(edge)
+                    if newDist < currDist:
+                        heappush(h, (newDist, edge))
+                        Distances[edge] = newDist
+                        lastPath[edge] = currNode
         self._graph.visited = []
-        return D, path
+        return Distances, lastPath
+
+
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         if self._graph.get_all_v().__contains__(str(id1)) and self._graph.get_all_v().__contains__(str(id2)):
