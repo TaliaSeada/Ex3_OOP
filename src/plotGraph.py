@@ -1,7 +1,7 @@
 import pygame
 
 from src.Edge import Edge
-from src.GraphAlgo import GraphAlgo
+# from src.GraphAlgo import GraphAlgo
 from src.Node import Node
 from src.api.GraphInterface import GraphInterface
 
@@ -50,29 +50,25 @@ def getBall(balls, node):
             return j
         j += 1
 
-def plot(graph):
-    algo = GraphAlgo()
-    # algo.load_from_json("../data/myGraph.json")
-    algo.load_from_json("../data/G1.json")
-    # algo.load_from_json("../data/A0.json")
 
+def plot(graph):
     min_x = float('inf')
-    for i in algo.get_graph().get_all_v().keys():
-        if algo.get_graph().get_all_v().get(str(i)).getLocation()[0] < min_x:
-            min_x = algo.get_graph().get_all_v().get(str(i)).getLocation()[0]
+    for i in graph.get_all_v().keys():
+        if graph.get_all_v().get(str(i)).getLocation()[0] < min_x:
+            min_x = graph.get_all_v().get(str(i)).getLocation()[0]
     max_x = - float('inf')
-    for i in algo.get_graph().get_all_v().keys():
-        if algo.get_graph().get_all_v().get(str(i)).getLocation()[0] > max_x:
-            max_x = algo.get_graph().get_all_v().get(str(i)).getLocation()[0]
+    for i in graph.get_all_v().keys():
+        if graph.get_all_v().get(str(i)).getLocation()[0] > max_x:
+            max_x = graph.get_all_v().get(str(i)).getLocation()[0]
 
     min_y = float('inf')
-    for i in algo.get_graph().get_all_v().keys():
-        if algo.get_graph().get_all_v().get(str(i)).getLocation()[1] < min_y:
-            min_y = algo.get_graph().get_all_v().get(str(i)).getLocation()[1]
+    for i in graph.get_all_v().keys():
+        if graph.get_all_v().get(str(i)).getLocation()[1] < min_y:
+            min_y = graph.get_all_v().get(str(i)).getLocation()[1]
     max_y = - float('inf')
-    for i in algo.get_graph().get_all_v().keys():
-        if algo.get_graph().get_all_v().get(str(i)).getLocation()[1] > max_y:
-            max_y = algo.get_graph().get_all_v().get(str(i)).getLocation()[1]
+    for i in graph.get_all_v().keys():
+        if graph.get_all_v().get(str(i)).getLocation()[1] > max_y:
+            max_y = graph.get_all_v().get(str(i)).getLocation()[1]
 
     pygame.init()
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -81,8 +77,8 @@ def plot(graph):
     # set nodes
     nodes = []
     balls = []
-    for i in algo.get_graph().get_all_v().keys():
-        node = algo.get_graph().get_all_v().get(str(i))
+    for i in graph.get_all_v().keys():
+        node = graph.get_all_v().get(str(i))
         nodes.append(node)
         ball = circle(node, min_x, max_x, min_y, max_y)
         balls.append(ball)
@@ -121,9 +117,3 @@ def plot(graph):
 
     pygame.quit()
 
-
-def main():
-    plot()
-
-if __name__ == '__main__':
-    main()

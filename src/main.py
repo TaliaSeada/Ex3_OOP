@@ -110,6 +110,7 @@ if __name__ == '__main__':
 
     # algo = GraphAlgo()
     # algo.load_from_json('../data/A0.json')
+    # algo.plot_graph()
     # start_Time = time.time_ns()
     # print(algo.centerPoint())
     # end_Time = time.time_ns()
