@@ -1,6 +1,7 @@
 from heapq import *
 from typing import List
 import json
+import random
 
 from src.DiGraph import DiGraph
 from src.api.GraphAlgoInterface import GraphAlgoInterface
@@ -10,12 +11,19 @@ from src.plotGraph import plot
 
 class GraphAlgo(GraphAlgoInterface):
 
-    def __init__(self):
-        self._revGraph = DiGraph()
-        self._graph = DiGraph()
+    def __init__(self, copy=None):
+        if not copy:
+            self._graph = DiGraph()
+            self._revGraph = DiGraph()
+        else:
+            self._graph = copy
+            self._revGraph = copy.reverse_graph(copy)
 
     def get_graph(self) -> GraphInterface:
         return self._graph
+
+    def get_revGraph(self) -> GraphInterface:
+        return self._revGraph
 
     def min_index(self, srcNode, dist_v, node_lst, passed):
         min = float('inf')
@@ -117,12 +125,19 @@ class GraphAlgo(GraphAlgoInterface):
             data = json.load(file)
             for i in data["Nodes"]:
                 id = i['id']
-                pos = i['pos']
-                xyz = pos.split(',')
-                for i in range(len(xyz)):
-                    xyz[i] = float(xyz[i])
-                self._graph.add_node(id, xyz)
-                self._revGraph.add_node(id, xyz)
+                if i.get('pos') is not None:
+                    pos = i['pos']
+                    xyz = pos.split(',')
+                    for i in range(len(xyz)):
+                        xyz[i] = float(xyz[i])
+                    self._graph.add_node(id, xyz)
+                    self._revGraph.add_node(id, xyz)
+                else:
+                    x = random.randint(0, 9)
+                    y = random.randint(0, 9)
+                    z = 0.0
+                    self._graph.add_node(id, (x, y, z))
+                    self._revGraph.add_node(id, (x, y, z))
             for i in data["Edges"]:
                 src = int(i["src"])
                 dest = int(i["dest"])

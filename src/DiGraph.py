@@ -1,3 +1,5 @@
+import random
+
 from src.Edge import Edge
 from src.api.GraphInterface import GraphInterface
 from src.Node import Node
@@ -11,18 +13,36 @@ class DiGraph(GraphInterface):
         self.visited = []
         self.mc = 0
 
+    def __repr__(self):
+        s = "Graph: |V|=" + str(len(self._nodes)) + " , |E|=" + str(len(self._edges))
+        return repr(s)
+
     def get_graph(self):
         return self
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
-        newNode = Node(node_id)
-        newNode.setLocation(pos)
-        if str(node_id) not in self._nodes.keys():
-            self._nodes[str(node_id)] = newNode
-            self.mc += 1
-            return True
+        if pos is not None:
+            newNode = Node(node_id)
+            newNode.setLocation(pos)
+            if str(node_id) not in self._nodes.keys():
+                self._nodes[str(node_id)] = newNode
+                self.mc += 1
+                return True
+            else:
+                return False
         else:
-            return False
+            x = random.randint(0, 9)
+            y = random.randint(0, 9)
+            z = 0.0
+            pos = (x, y, z)
+            newNode = Node(node_id)
+            newNode.setLocation(pos)
+            if str(node_id) not in self._nodes.keys():
+                self._nodes[str(node_id)] = newNode
+                self.mc += 1
+                return True
+            else:
+                return False
 
     def all_in_edges_of_node(self, id1: int) -> dict:
         return self._nodes.get(str(id1)).getEdgesToNode()
@@ -93,4 +113,18 @@ class DiGraph(GraphInterface):
 
     def v_size(self) -> int:
         return len(self._nodes)
+
+    def reverse_graph(self, g: GraphInterface):
+        rever = DiGraph()
+        rever_v = g.get_all_v()
+        for key in rever_v.keys():
+            node = rever_v.get(key)
+            rever_e_out = g.all_out_edges_of_node(node.getKey())
+            rever_e_in = g.all_in_edges_of_node(node.getKey())
+            rever.add_node(node.getKey(), node.getLocation())
+            for edge in rever_e_out:
+                rever.add_edge(int(edge), int(key), rever_e_out.get(edge))
+            for edge in rever_e_in:
+                rever.add_edge(int(key), int(edge), rever_e_in.get(edge))
+        return rever
 

@@ -9,6 +9,11 @@ class Node:
         self._edgesFromNode = {}
         self._tag = 0
 
+    def __repr__(self):
+        s = str(self._key) + ": |edges out| " + str(len(self._edgesFromNode)) + " |edges in| " + str(len(self._edgesToNode))
+
+        return repr(s)
+
     def addEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
             self._edgesFromNode[str(edge.getDestNode())] = edge.getWeight()

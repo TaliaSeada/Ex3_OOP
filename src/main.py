@@ -1,6 +1,5 @@
 from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
-import time
 
 
 def check():
@@ -107,9 +106,12 @@ def check3():
 
 if __name__ == '__main__':
     check()
+    check3()
 
+    # file = "../data/T0.json"
     # algo = GraphAlgo()
-    # algo.load_from_json('../data/A0.json')
+    # algo.load_from_json(file)
+    # print(algo.isConnected())
     # algo.plot_graph()
     # start_Time = time.time_ns()
     # print(algo.centerPoint())
