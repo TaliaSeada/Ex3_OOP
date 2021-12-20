@@ -2,9 +2,9 @@ from src import Edge
 
 
 class Node:
-    def __init__(self, key, location):
+    def __init__(self, key: int):
         self._key = key
-        self._location = tuple(location)
+        self._location = ()
         self._edgesToNode = {}
         self._edgesFromNode = {}
         self._tag = 0

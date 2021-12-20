@@ -15,7 +15,8 @@ class DiGraph(GraphInterface):
         return self
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
-        newNode = Node(node_id, pos)
+        newNode = Node(node_id)
+        newNode.setLocation(pos)
         if str(node_id) not in self._nodes.keys():
             self._nodes[str(node_id)] = newNode
             self.mc += 1
@@ -31,6 +32,8 @@ class DiGraph(GraphInterface):
 
     def remove_node(self, node_id: int) -> bool:
         try:
+            if str(node_id) not in self._nodes:
+                return False
             in_edges = self.all_in_edges_of_node(node_id)
             out_edges = self.all_out_edges_of_node(node_id)
             for key in in_edges:

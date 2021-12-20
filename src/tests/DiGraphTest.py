@@ -9,16 +9,16 @@ class MyTestCase(unittest.TestCase):
     def test_Graph(self):
         graph = DiGraph()
 
-        node = Node(0, (1.0, 2.0, 0.0))
-        node1 = Node(1, (3.0, 4.0, 0.0))
-        node2 = Node(2, (5.0, 6.0, 0.0))
+        node = Node(0)
+        node1 = Node(1)
+        node2 = Node(2)
 
         # addNode
-        self.assertTrue(graph.add_node(0, (1.0, 2.0, 0.0)))
-        self.assertTrue(graph.add_node(1, (3.0, 4.0, 0.0)))
-        self.assertTrue(graph.add_node(2, (5.0, 6.0, 0.0)))
-        self.assertTrue(graph.add_node(3, (7.0, 8.0, 0.0)))
-        self.assertFalse(graph.add_node(3, (7.0, 8.0, 0.0)))
+        self.assertTrue(graph.add_node(0))
+        self.assertTrue(graph.add_node(1))
+        self.assertTrue(graph.add_node(2))
+        self.assertTrue(graph.add_node(3))
+        self.assertFalse(graph.add_node(3))
 
         # removeNode
         self.assertTrue(graph.remove_node(3))

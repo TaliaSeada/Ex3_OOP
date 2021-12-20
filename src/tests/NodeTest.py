@@ -6,7 +6,7 @@ from src.Node import Node
 
 class MyTestCase(unittest.TestCase):
     def test_Node(self):
-        node = Node(0, (0.0, 2.0, 3.0))
+        node = Node(0)
 
         self.assertNotEqual(node, None)
 
@@ -18,7 +18,7 @@ class MyTestCase(unittest.TestCase):
 
         # getters
         self.assertEqual(key, 0)
-        self.assertEqual(loc, (0.0, 2.0, 3.0))
+        self.assertEqual(loc, ())
         self.assertEqual(edToN, {})
         self.assertEqual(edFrN, {})
         self.assertEqual(tag, 0)
