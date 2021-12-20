@@ -34,18 +34,18 @@ class DiGraph(GraphInterface):
             return False
 
     def all_in_edges_of_node(self, id1: int) -> dict:
-        node = self._nodes[str(id1)]
-        inEdges = {}
-        for key in (node.getEdgesToNode().keys()):
-            inEdges[str(key)] = node.getEdgesToNode()[str(key)]
-        return inEdges
+        # node = self._nodes[str(id1)]
+        # inEdges = {}
+        # for key in (node.getEdgesToNode().keys()):
+        #     inEdges[str(key)] = node.getEdgesToNode()[str(key)]
+        return self._nodes.get(str(id1)).getEdgesToNode()
 
     def all_out_edges_of_node(self, id1: int) -> dict:
-        node = self._nodes[str(id1)]
-        outEdges = {}
-        for key in (node.getEdgesFromNode().keys()):
-            outEdges[str(key)] = node.getEdgesFromNode()[str(key)]
-        return outEdges
+        # node = self._nodes[str(id1)]
+        # outEdges = {}
+        # for key in (node.getEdgesFromNode().keys()):
+        #     outEdges[str(key)] = node.getEdgesFromNode()[str(key)]
+        return self._nodes.get(str(id1)).getEdgesFromNode()
 
     def remove_node(self, node_id: int) -> bool:
         try:

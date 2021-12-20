@@ -120,7 +120,7 @@ class GraphAlgo(GraphAlgoInterface):
             minDist = float('inf')
             minIndex = -1
             for v in self._graph.get_all_v().keys():
-                dist, path = self.dijkstra2(int(v), minDist)
+                dist, path = self.dijkstra(int(v))
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
                     minIndex = int(v)
@@ -224,20 +224,23 @@ class GraphAlgo(GraphAlgoInterface):
             lastPath[v] = None
         Distances[str(src)] = 0
         h = []
+        all_v = self._graph.get_all_v()
         heappush(h, (Distances[str(src)], str(src)))
         while h:
             currNode = heappop(h)[1]
-            self._graph.visited.append(currNode)
+            # self._graph.visited.append(currNode)
+            all_v.get(str(currNode)).setTag(2)
             outEdges = self._graph.all_out_edges_of_node(int(currNode))
             for edge in outEdges.keys():
-                if edge not in self._graph.visited:
+                if all_v.get(str(edge)).getTag() != 2:
                     currDist = Distances.get(edge)
                     newDist = Distances.get(currNode) + outEdges.get(edge)
                     if newDist < currDist:
                         heappush(h, (newDist, edge))
                         Distances[edge] = newDist
                         lastPath[edge] = currNode
-        self._graph.visited = []
+        for v in all_v:
+            all_v.get(v).setTag(0)
         return Distances, lastPath
 
 

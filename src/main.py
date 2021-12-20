@@ -108,11 +108,10 @@ def check3():
 if __name__ == '__main__':
     # check()
     algo = GraphAlgo()
-    algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/A0.json')
-    #print(algo.isConnected())
-    list = [1, 7, 5, 3]
+    algo.load_from_json('/home/bravo8234/PycharmProjects/Ex3_OOP/data/1000Nodes.json')
+    # print(algo.isConnected())
     start_Time = time.time_ns()
-    print(algo.TSP(list))
+    print(algo.centerPoint())
     end_Time = time.time_ns()
     print("second to check: " + str(end_Time-start_Time))
     # print(algo.bfs(0, algo.graph))
