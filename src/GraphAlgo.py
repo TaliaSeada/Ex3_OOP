@@ -216,7 +216,7 @@ class GraphAlgo(GraphAlgoInterface):
     #     return D, path
 
     def dijkstra(self, src: int):
-        print(src)
+        # print(src)
         Distances = {}
         lastPath = {}
         for v in self._graph.get_all_v():
