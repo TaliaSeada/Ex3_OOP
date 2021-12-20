@@ -108,7 +108,7 @@ def check3():
 if __name__ == '__main__':
     # check()
     algo = GraphAlgo()
-    algo.load_from_json('../data/A5.json')
+    algo.load_from_json('../data/A0.json')
     # print(algo.isConnected())
     start_Time = time.time_ns()
     print(algo.centerPoint())
