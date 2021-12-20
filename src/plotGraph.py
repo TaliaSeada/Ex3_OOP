@@ -1,13 +1,9 @@
 import pygame
 
-from src.Edge import Edge
-# from src.GraphAlgo import GraphAlgo
 from src.Node import Node
-from src.api.GraphInterface import GraphInterface
 
 SCREEN_WIDTH = 1300
 SCREEN_HEIGHT = 800
-PEDDING = 50
 
 
 class circle:
@@ -25,7 +21,6 @@ class line:
     def __init__(self, startBall: circle, endBall: circle):
         self._src = (startBall.x, startBall.y)
         self._dest = (endBall.x, endBall.y)
-        # self.w = w
 
     def drawLine(self, screen, inOut):
         pygame.draw.line(screen, (70, 70, 70), self._src, self._dest, 2)

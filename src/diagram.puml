@@ -1,0 +1,99 @@
+@startuml
+
+main o-- DiGraph
+main o-- GraphAlgo
+
+DiGraph o-- Edge
+DiGraph o-- Node
+
+GraphAlgo o-- DiGraph
+GraphAlgo o-- plotGraph
+
+plotGraph o-- Node
+plotGraph o-- circle
+plotGraph o-- line
+
+
+class main{
++check
++check0
++check1
++check2
++check3
+}
+
+class Edge{
+-src
+-dest
+-weight
+}
+
+class Node{
+-key
+-location
+-edgesToNode
+-edgesFromNode
+-tag
+
++addEdge
++removeEdge
+}
+
+class DiGraph{
+-nodes
+-edges
+-visited
+-mc
+
++get_graph
++add_node
++all_in_edges_of_node
++all_out_edges_of_node
++remove_node
++remove_edge
++add_edge
++reverse_graph
+}
+
+class plotGraph{
++getBall
++plot
+}
+
+class circle{
+-key
+- x
+- y
+-radius
+
++drawBall
+}
+
+class line{
+-src
+-dest
+
++drawLine
+}
+
+class GraphAlgo{
+-graph
+-reverse_graph
+
++get_graph
++get_revGraph
++min_index
++TSP
++bfs
++isConnected
++centerPoint
++load_from_json
++save_to_json
++dijkstra
++shortest_path
++plot_graph
+}
+
+
+
+@enduml
