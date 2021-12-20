@@ -11,6 +11,7 @@ from src.GraphInterface import GraphInterface
 from src.Node import Node
 from src.Edge import Edge
 
+
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self):
@@ -80,7 +81,7 @@ class GraphAlgo(GraphAlgoInterface):
                 if v_group.get(i).getTag() == 0:
                     queue.append(i)
                     v_group.get(i).setTag(2)
-                    D[i] = D[nodeKey]+1
+                    D[i] = D[nodeKey] + 1
         # reset tags
         for n in v_group:
             v_group.get(n).setTag(0)
@@ -169,7 +170,7 @@ class GraphAlgo(GraphAlgoInterface):
                 y = location[1]
                 z = location[2]
                 id = int(node)
-                currNode = {"pos":(str(x) + "," + str(y) + "," + str(z)), "id": id}
+                currNode = {"pos": (str(x) + "," + str(y) + "," + str(z)), "id": id}
                 nodes.append(currNode)
                 allOutEdges = self._graph.all_out_edges_of_node(id)
                 for edge in allOutEdges.keys():
@@ -243,8 +244,6 @@ class GraphAlgo(GraphAlgoInterface):
             all_v.get(v).setTag(0)
         return Distances, lastPath
 
-
-
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         if self._graph.get_all_v().__contains__(str(id1)) and self._graph.get_all_v().__contains__(str(id2)):
             p = []
@@ -260,22 +259,5 @@ class GraphAlgo(GraphAlgoInterface):
             return dist[str(id2)], p
         return float('inf'), []
 
-
     def plot_graph(self) -> None:
         pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
