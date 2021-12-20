@@ -87,20 +87,6 @@ class GraphAlgo(GraphAlgoInterface):
             v_group.get(n).setTag(0)
         return max(D.values())
 
-    def reverse_graph(self, g: GraphInterface):
-        rever = DiGraph()
-        rever_v = g.get_all_v()
-        for key in rever_v.keys():
-            node = rever_v.get(key)
-            rever_e_out = g.all_out_edges_of_node(node.getKey())
-            rever_e_in = g.all_in_edges_of_node(node.getKey())
-            rever.add_node(node.getKey(), node.getLocation())
-            for edge in rever_e_out:
-                rever.add_edge(int(edge), int(key), rever_e_out.get(edge))
-            for edge in rever_e_in:
-                rever.add_edge(int(key), int(edge), rever_e_in.get(edge))
-        return rever
-
     def isConnected(self):
         # bfs from a node, reverse edges, again bfs from the same node
         # if we got integer smaller than infinity in both, it means the graph is strongly connected
@@ -125,12 +111,6 @@ class GraphAlgo(GraphAlgoInterface):
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
                     minIndex = int(v)
-            # min_index = float('inf')
-            # index = -1
-            # for key in longest.keys():
-            #     if longest[key] < min_index:
-            #         min_index = longest[key]
-            #         index = int(key)
             return minIndex, minDist
         else:
             return -1, float('inf')
@@ -153,6 +133,7 @@ class GraphAlgo(GraphAlgoInterface):
                 weight = float(i["w"])
                 self._graph.add_edge(src, dest, weight)
                 self._revGraph.add_edge(dest, src, weight)
+            file.close()
             return True
         except Exception as e:
             print(e)
@@ -182,39 +163,11 @@ class GraphAlgo(GraphAlgoInterface):
             all = {"Edges": edges, "Nodes": nodes}
             with open(file_name, "w") as file:
                 file.write(json.dumps(all, indent=4))
+            file.close()
             return True
         except Exception as e:
             print(e)
             return False
-
-    # def dijkstra(self, id1: int):
-    #     print(id1)
-    #     D = {}
-    #     path = {}
-    #     for v in self._graph.get_all_v().keys():
-    #         D[v] = float('inf')
-    #         path[v] = None
-    #     D[str(id1)] = 0
-    #
-    #     pq = PriorityQueue()
-    #     pq.put((0, id1))
-    #
-    #     while not pq.empty():
-    #         (dist, current) = pq.get()
-    #         self._graph.visited.append(current)
-    #
-    #         for neighbor in self._graph.get_all_v().keys():
-    #             if self._graph.all_out_edges_of_node(current).__contains__(neighbor):
-    #                 distance = self._graph.all_out_edges_of_node(current)[neighbor]
-    #                 if neighbor not in self._graph.visited:
-    #                     old_cost = D[neighbor]
-    #                     new_cost = D[str(current)] + distance
-    #                     if new_cost < old_cost:
-    #                         pq.put((new_cost, neighbor))
-    #                         path[neighbor] = str(current)
-    #                         D[neighbor] = new_cost
-    #     self._graph.visited = []
-    #     return D, path
 
     def dijkstra(self, src: int):
         # print(src)
@@ -229,7 +182,6 @@ class GraphAlgo(GraphAlgoInterface):
         heappush(h, (Distances[str(src)], str(src)))
         while h:
             currNode = heappop(h)[1]
-            # self._graph.visited.append(currNode)
             all_v.get(str(currNode)).setTag(2)
             outEdges = self._graph.all_out_edges_of_node(int(currNode))
             for edge in outEdges.keys():

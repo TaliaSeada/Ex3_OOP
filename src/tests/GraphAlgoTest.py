@@ -7,6 +7,20 @@ from src.GraphAlgo import GraphAlgo
 
 
 class MyTestCase(unittest.TestCase):
+    def test_getGraph(self):
+        Agraph = GraphAlgo()
+        fileName = "../../data/A0.json"
+        Agraph.load_from_json(fileName)
+
+        print(type(Agraph.get_graph()))
+
+    def test_TSP(self):
+        Agraph = GraphAlgo()
+        fileName = "../../data/A0.json"
+        Agraph.load_from_json(fileName)
+
+        cities = [0, 3, 6, 9]
+
     def test_load(self):
         Agraph = GraphAlgo()
         # fileName = "../../data/A0"
@@ -38,6 +52,5 @@ class MyTestCase(unittest.TestCase):
         Agraph = GraphAlgo()
         fileName = "../../data/G1.json"
         Agraph.load_from_json(fileName)
-        list = [0,1,2,6]
-        self.assertEqual(list, Agraph.shortest_path(0,6)[1])
-
+        list = [0, 1, 2, 6]
+        self.assertEqual(list, Agraph.shortest_path(0, 6)[1])
