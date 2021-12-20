@@ -5,6 +5,7 @@ import json
 from src.DiGraph import DiGraph
 from src.api.GraphAlgoInterface import GraphAlgoInterface
 from src.api.GraphInterface import GraphInterface
+from src.plotGraph import plot
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -207,4 +208,4 @@ class GraphAlgo(GraphAlgoInterface):
         return float('inf'), []
 
     def plot_graph(self) -> None:
-        pass
+        plot(self._graph)
