@@ -1,5 +1,5 @@
 from src.Edge import Edge
-from src.GraphInterface import GraphInterface
+from src.api.GraphInterface import GraphInterface
 from src.Node import Node
 
 
