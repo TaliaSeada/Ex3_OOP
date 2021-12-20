@@ -37,9 +37,6 @@ In this algorithm we need to find if there is a path between every two nodes in 
 #### 4. tsp:
 Traveling Sales Man problem.
 
-## Implementation:
-First we implemented the Node and the Edge classes.
-Afterwards we implemented the DiGraph and GraphAlgo classes.
 
 ### Class Node:
 This class represents the set of operations applicable on a
@@ -47,32 +44,26 @@ node (vertex) in a (directional) weighted graph.
 Implements the NodeData interface.
 
 #### The parameters of the class:
-- __int key__ : Represents a node's ID number
-- __GeoLocation loc__ : Represents a node's location.
-- __String info__ : Represents the data about a node.
-- __ArrayList<Integer> EdgesToNode__ : holds the edges which goes to a node.
-- __ArrayList<Integer> EdgesFromNode__ : holds the edges which goes from a node.
-- __int tag__ : Represents the color associated to a node.
+- __key__ : Represents a node's ID number
+- __location__ : Represents a node's location.
+- __edgesToNode__ : holds the edges which goes to a node.
+- __edgesFromNode__ : holds the edges which goes from a node.
+- __tag__ : Represents the color associated to a node.
 
-#### The functions that we received with the given interface:
-1. __getKey()__ - Returns the ID of this node.
-2. __getLocation()__ - Returns the location of this node.
-3. __setLocation(GeoLocation p)__ - Setting new location to this node.
-4. __getInfo()__ - Returns the remark (meta data) associated with this node.
-5. __setInfo(String s)__ - Setting new remark (meta data) that will be associated with this node.
-6. __getTag()__ - Returns the tag (Temporal data) of this node.
+
+#### The functions of this class :
+1. __Node(key)__ - Constructor that receives ID number.
+2. __getEdgesToNode()__ - Returns the list of edges that goes to this node.
+3. __getEdgesFromNode()__ - Returns the list of edges that goes from this node.
+4. __addEdge(edge: Edge)__ - Adding an edge to one of the lists of nodes according to the edge's src and dest nodes.
+5. __removeEdge(edge: Edge)__ - Removing an edge from one of the lists according to the edge's src and dest nodes.
+6. __getKey()__ - Returns the ID of this node.
+7. __setKey(k)__ - Setting new key to this node.
+8. __getLocation()__ - Returns the location of this node.
+9. __setLocation(location)__ - Setting new location to this node.
+10. __getTag()__ - Returns the tag (Temporal data) of this node.
+11. __setTag(t)__ - Setting new tag to this node.
 We defined tag to be colors: 0 - for Undiscovered nodes "white", 1- for discovered but not finished "grey", 2- for finished nodes "black".
-7. __setTag(int t)__- Setting new tag to this node.
-
-#### The functions that we added to this class (not included in the interface):
-1. __Node(int key, GeoLocation location)__ - Constructor that receives ID number and location.
-2. __Node(int key,double x, double y, double z)__ - Constructor that receives ID number and location's x,y,z values.
-3. __Node(LinkedTreeMap<?,?> node)__ - Constructor that receives Linked Tree Map from a Json File.
-4. __Node(Node other)__ - Copy constructor.
-5. __getToNode()__ - Returns the list of edges that goes to this node.
-6. __getFromNode()__ - Returns the list of edges that goes from this node.
-7. __addEdge(Edge edge)__ - Adding an edge to one of the lists of nodes according to the edge's src and dest nodes.
-8. __removeEdge(int node,String type)__ - Removing an edge from one of the lists according to the edge's src and dest nodes.
 
 
 ### Class Edge:
@@ -81,24 +72,28 @@ directional edge(src,dest) in a (directional) weighted graph.
 Implements the EdgeData interface
 
 #### The parameters of the class:
-- __int src__ : source node of the edge
-- __int dest__ : destination node of the edge
-- __double w__ : weight of the edge
-- __String info__ : information associated with this edge
+- __src__ : source node of the edge
+- __dest__ : destination node of the edge
+- __w__ : weight of the edge
 
 #### The functions that we received with the given interface:
 1. __getSrc()__ - The ID of the source node of this edge.
 2. __getDest()__ - The ID of the destination node of this edge
 3. __getWeight()__ - The weight of this edge (positive value).
-4. __getInfo()__ - Returns the remark (meta data) associated with this edge.
-5. __setInfo(String s)__ - Allows changing the remark (meta data) associated with this edge.
 
-#### The functions that we added to this class (not included in the interface):
-1. __Edge(int src, int dest, double weight)__ - Constructor that receives the source and destination nodes and weight.
-2. __Edge(LinkedTreeMap<?,?> edge)__ - Constructor that receives Linked Tree Map from a Json File.
-3. __Edge(Edge other)__ - Copy constructor.
-4. __compareTo(Edge o)__ - compare this edge to another edge.
+#### The functions of this class :
+1. __Edge(src, weight, dest)__ - Constructor that receives the source and destination nodes and weight.
+2. __getSrcNode()__ - The ID of the source node of this edge.
+3. __getDestNode()__ - The ID of the destination node of this edge
+4. __getWeight()__ - The weight of this edge (positive value).
+5. __setSrcNode(node: Node)__ - Setting new source to this edge.
+6. __setDestNode(node: Node)__ - Setting new destination to this edge.
+7. __setWeight(w)__ - Setting new weight to this edge.
 
+
+
+
+# HERE !
 ### Class DiGraph:
 This class represents a Directional Weighted Graph, implementing the GraphInterface.
 
