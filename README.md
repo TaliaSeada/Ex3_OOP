@@ -90,43 +90,28 @@ Implements the EdgeData interface
 6. __setDestNode(node: Node)__ - Setting new destination to this edge.
 7. __setWeight(w)__ - Setting new weight to this edge.
 
-
-
-
-# HERE !
 ### Class DiGraph:
 This class represents a Directional Weighted Graph, implementing the GraphInterface.
 
 #### The parameters of the class:
-- __HashMap<Integer,NodeData> nodes__ : holds all the nodes of this graph
-- __HashMap<Integer,HashMap<String,EdgeData>> nodeEdges__ : holds the edges that goes from a node
-- __ArrayList<EdgeData> allEdges__ : holds the edges of this graph
-- __final String name__ : name of this graph
-- __int MC =0__ : Mode Count
+- __nodes__ : holds all the nodes of this graph
+- __edges__ : holds all the edges of this graph
+- __int MC = 0__ : Mode Count
 
-#### The functions that we received with the given interface:
-1. __getNode(int key)__ - returns the node_data by the node_id.
-2. __getEdge(int src, int dest)__ - returns the data of the edge (src,dest).
-3. __addNode(NodeData n)__ - adds a new node to the graph with the given node_data.
-4. __connect(int src, int dest, double w)__ - Connects an edge with weight w between node src to node dest. this method run in O(1) time.
-5. __Iterator<NodeData> nodeIter()__ - This method returns an Iterator for the collection representing all the nodes in the graph.
-6. __Iterator<EdgeData> edgeIter()__ - This method returns an Iterator for all the edges in this graph.
-7. __Iterator<EdgeData> edgeIter(int node_id)__ - This method returns an Iterator for edges getting out of the given node (all the edges starting (source) at the given node).
-8. __removeNode(int key)__ - Deletes the node (with the given ID) from the graph - and removes all edges which starts or ends at this node. This method run in O(k), V.degree=k, as all the edges removed.
-9. __removeEdge(int src, int dest)__ - Deletes the edge from the graph, this method run in O(1) time.
-10. __nodeSize()__ - Returns the number of vertices (nodes) in the graph.
-11. __int edgeSize()__ - Returns the number of edges (assume directional graph).
-12. __getMC()__ - Returns the Mode Count.
-
-#### The functions that we added to this class (not included in the interface):
+#### The functions of this class :
 1. __Graph()__ - Default constructor
-2. __Graph(ArrayList<Edge> edges, ArrayList<Node> nodes,String name)__ - constructor that receives the edges, nodes and the name of a graph.
-3. __Graph(Graph other)__ - copy constructor.
-4. __getAllEdges()__ - Returns all the edges of the graph.
-5. __getNodeEdges()__ - Returns all the edges associated with a node.
-6. __getNodes()__ - Returns all the nodes of the graph.
-7. __getName()__ - Returns the name of the graph.
-
+2. __get_graph()__ - Returns the graph
+3. __add_node(node_id, pos = None)__ - adds a new node to the graph with the given node.
+4. __all_in_edges_of_node()__ - Returns all the edges that go to the graph.
+5. __all_out_edges_of_node()__ - Returns all the edges that go out of the graph.
+6. __remove_node(node_id)__ - Deletes the node (with the given ID) from the graph - and removes all edges which starts or ends at this node. This method run in O(k), V.degree=k, as all the edges removed.
+7. __remove_edge(node_id1, node_id2)__ - Deletes the edge from the graph, this method run in O(1) time.
+8. __add_edge(id1, id2, weight)__ - adds a new edge to the graph with the given two nodes and a weight.
+9. __get_all_v()__ - Returns all the nodes of the graph.
+10. __reverse_graph()__ - This method returns a reversed graph.
+11. __get_mc()__ - Returns the Mode Count.
+12. __e_size()__ - Returns the number of edges of this graph.
+13. __v_size()__ - Returns the number of nodes of this graph.
 
 ### Class GraphAlgo:
 This class represents a Directed (positive) Weighted Graph Theory Algorithms.
