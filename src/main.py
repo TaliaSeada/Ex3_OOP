@@ -115,9 +115,9 @@ if __name__ == '__main__':
     # df.to_csv('../data/results.csv', index=False)
     df = pd.read_csv('../data/results.csv')
     row = []
-    file = "../data/G1.json"
+    file = "../data/1000Nodes.json"
     algo = GraphAlgo()
-    row.append("G1")
+    row.append("1000Nodes")
     load_startTime = time.time_ns()
     algo.load_from_json(file)
     load_endTime = time.time_ns()
@@ -136,14 +136,18 @@ if __name__ == '__main__':
     end_Time = time.time_ns()
     row.append((end_Time-start_Time)/1000000000)
     print("time to run tsp for 10 cities: " + str((end_Time-start_Time)/1000000000) + " seconds")
-    row_name = "G1"
-    row.append(0)
+    cities = TestGraphAlgo.createCities(100, algo)
+    start_Time = time.time_ns()
+    print(algo.TSP(cities))
+    end_Time = time.time_ns()
+    row.append((end_Time - start_Time) / 1000000000)
+    print("time to run tsp for 100 cities: " + str((end_Time - start_Time) / 1000000000) + " seconds")
     row.append(0)
     row.append(0)
     print(df.columns)
     series = pd.Series(row, index=df.columns)
     df = df.append(series, ignore_index=True)
-    df.to_csv('../data/results.csv')
+    df.to_csv('../data/results.csv', index=False)
 
 
 
