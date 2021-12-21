@@ -68,7 +68,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def bfs(self, nodeKey: int, g: DiGraph):
         D = {v: float('inf') for v in self._graph.get_all_v().keys()}
-        D[str(nodeKey)] = 0
+        D[nodeKey] = 0
         queue = []
         nodeDict = g.get_all_v()
         node = nodeDict.get(nodeKey)

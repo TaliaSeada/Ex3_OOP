@@ -45,16 +45,16 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(graph.remove_edge(0, 2))
         self.assertFalse(graph.remove_edge(0, 2))
 
-        nodes = {'0': node, '1': node1, '2': node2}
+        nodes = {0: node, 1: node1, 2: node2}
 
         # mc
         self.assertEqual(graph.get_mc(), 12)
 
         # all edges
-        allIn = {str(node1.getKey()): edge3.getWeight(), str(node2.getKey()): edge2.getWeight()}
+        allIn = {node1.getKey(): edge3.getWeight(), node2.getKey(): edge2.getWeight()}
         self.assertEqual(allIn, graph.all_in_edges_of_node(node.getKey()))
 
-        allOut = {str(node1.getKey()): edge.getWeight()}
+        allOut = {node1.getKey(): edge.getWeight()}
         self.assertEqual(allOut, graph.all_out_edges_of_node(node.getKey()))
 
         # getters
@@ -67,6 +67,7 @@ class MyTestCase(unittest.TestCase):
         # self.assertEqual(v, nodes)
         for i in v:
             self.assertTrue(nodes.__contains__(i))
+
 
 if __name__ == '__main__':
     unittest.main()

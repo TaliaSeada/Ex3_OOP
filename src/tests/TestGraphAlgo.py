@@ -1,9 +1,21 @@
+import random
 import unittest
 
 from src.DiGraph import DiGraph
 from src.Edge import Edge
 from src.Node import Node
 from src.GraphAlgo import GraphAlgo
+
+
+def createCities(size: int, g: GraphAlgo):
+    cities = []
+    maxKey = max(g.get_graph().get_all_v().keys())
+    minKey = min(g.get_graph().get_all_v().keys())
+    while len(cities) < size:
+        city = random.randint(minKey, maxKey)
+        if city not in cities:
+            cities.append(city)
+    return cities
 
 
 class MyTestCase(unittest.TestCase):

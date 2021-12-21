@@ -1,5 +1,9 @@
+import time
+
+import pandas as pd
 from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
+from tests import TestGraphAlgo
 
 
 def check():
@@ -105,17 +109,41 @@ def check3():
 
 
 if __name__ == '__main__':
-    check()
-    check3()
-
-    # file = "../data/T0.json"
-    # algo = GraphAlgo()
-    # algo.load_from_json(file)
-    # print(algo.isConnected())
+    # check()
+    # check3()
+    # df = pd.DataFrame(columns=["Name", "Load", "Center", "TSP 10 nodes", "TSP 100 nodes", "TSP 1000 nodes", "TSP 10000 nodes"])
+    # df.to_csv('../data/results.csv', index=False)
+    df = pd.read_csv('../data/results.csv')
+    row = []
+    file = "../data/G1.json"
+    algo = GraphAlgo()
+    row.append("G1")
+    load_startTime = time.time_ns()
+    algo.load_from_json(file)
+    load_endTime = time.time_ns()
+    row.append((load_endTime-load_startTime)/1000000000)
+    print("time to load graph: " + str((load_endTime-load_startTime)/1000000000) + " seconds")
     # algo.plot_graph()
-    # start_Time = time.time_ns()
-    # print(algo.centerPoint())
-    # end_Time = time.time_ns()
-    # print("second to check: " + str(end_Time-start_Time))
+    start_Time = time.time_ns()
+    print(algo.centerPoint())
+    end_Time = time.time_ns()
+    row.append((end_Time-start_Time)/1000000000)
+
+    print("time to check center: " + str((end_Time-start_Time)/1000000000) + " seconds")
+    cities = TestGraphAlgo.createCities(10, algo)
+    start_Time = time.time_ns()
+    print(algo.TSP(cities))
+    end_Time = time.time_ns()
+    row.append((end_Time-start_Time)/1000000000)
+    print("time to run tsp for 10 cities: " + str((end_Time-start_Time)/1000000000) + " seconds")
+    row_name = "G1"
+    row.append(0)
+    row.append(0)
+    row.append(0)
+    print(df.columns)
+    series = pd.Series(row, index=df.columns)
+    df = df.append(series, ignore_index=True)
+    df.to_csv('../data/results.csv')
+
 
 

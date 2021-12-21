@@ -45,8 +45,8 @@ class MyTestCase(unittest.TestCase):
         edToN = node.getEdgesToNode()
         edFrN = node.getEdgesFromNode()
 
-        e = {str(edge.getDestNode()): edge.getWeight()}
-        e2 = {str(edge2.getSrcNode()): edge2.getWeight()}
+        e = {edge.getDestNode(): edge.getWeight()}
+        e2 = {edge2.getSrcNode(): edge2.getWeight()}
         self.assertEqual(edFrN, e)
         self.assertEqual(edToN, e2)
 
@@ -55,6 +55,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(edFrN, {})
         node.removeEdge(edge2)
         self.assertEqual(edToN, {})
+
 
 if __name__ == '__main__':
     unittest.main()

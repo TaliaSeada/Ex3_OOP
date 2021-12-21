@@ -10,8 +10,8 @@ class Node:
         self._tag = 0
 
     def __repr__(self):
-        s = str(str(self._key) + ": |edges out| " + str(len(self._edgesFromNode)) + " |edges in| " + str(len(self._edgesToNode)))
-        return repr(s)
+        s = "{}: |edges out| {} |edges in| {}".format(self._key, len(self._edgesFromNode), len(self._edgesToNode))
+        return s
 
     def addEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
