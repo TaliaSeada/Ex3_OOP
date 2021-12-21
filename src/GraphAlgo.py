@@ -29,9 +29,9 @@ class GraphAlgo(GraphAlgoInterface):
         min = float('inf')
         index = 0
         for key in node_lst:
-            if dist_v.get(str(key)) < min and key != srcNode and key not in passed:
-                index = int(key)
-                min = dist_v.get(str(key))
+            if dist_v.get(key) < min and key != srcNode and key not in passed:
+                index = key
+                min = dist_v.get(key)
         return index
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
@@ -61,7 +61,7 @@ class GraphAlgo(GraphAlgoInterface):
                 elif path[-1] != p:
                     path.append(p)
             # finally increase the dist by the distance between the two nodes
-            dist += dist_v.get(str(min_ind))
+            dist += dist_v.get(min_ind)
             v = min_ind
 
         return path, dist
@@ -71,11 +71,11 @@ class GraphAlgo(GraphAlgoInterface):
         D[str(nodeKey)] = 0
         queue = []
         nodeDict = g.get_all_v()
-        node = nodeDict.get(str(nodeKey))
+        node = nodeDict.get(nodeKey)
 
         # Mark the source node as visited and enqueue it
         node.setTag(2)
-        queue.append(str(nodeKey))
+        queue.append(nodeKey)
         v_group = g.get_all_v()
         while queue:
             # Dequeue a vertex from queue
@@ -111,7 +111,7 @@ class GraphAlgo(GraphAlgoInterface):
             minDist = float('inf')
             minIndex = -1
             for v in self._graph.get_all_v().keys():
-                dist, path = self.dijkstra(int(v))
+                dist, path = self.dijkstra(v)
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
                     minIndex = int(v)
@@ -124,7 +124,7 @@ class GraphAlgo(GraphAlgoInterface):
             file = open(file_name)
             data = json.load(file)
             for i in data["Nodes"]:
-                id = i['id']
+                id = int(i['id'])
                 if i.get('pos') is not None:
                     pos = i['pos']
                     xyz = pos.split(',')
@@ -161,13 +161,13 @@ class GraphAlgo(GraphAlgoInterface):
                 x = location[0]
                 y = location[1]
                 z = location[2]
-                id = int(node)
+                id = node
                 currNode = {"pos": (str(x) + "," + str(y) + "," + str(z)), "id": id}
                 nodes.append(currNode)
                 allOutEdges = self._graph.all_out_edges_of_node(id)
                 for edge in allOutEdges.keys():
                     src = id
-                    dest = int(edge)
+                    dest = edge
                     weight = allOutEdges[edge]
                     edgeCurr = {"src": id, "w": weight, "dest": dest}
                     edges.append(edgeCurr)
@@ -187,16 +187,16 @@ class GraphAlgo(GraphAlgoInterface):
         for v in self._graph.get_all_v():
             Distances[v] = float('inf')
             lastPath[v] = None
-        Distances[str(src)] = 0
+        Distances[src] = 0
         h = []
         all_v = self._graph.get_all_v()
-        heappush(h, (Distances[str(src)], str(src)))
+        heappush(h, (Distances[src], src))
         while h:
             currNode = heappop(h)[1]
-            all_v.get(str(currNode)).setTag(2)
+            all_v.get(currNode).setTag(2)
             outEdges = self._graph.all_out_edges_of_node(int(currNode))
             for edge in outEdges.keys():
-                if all_v.get(str(edge)).getTag() != 2:
+                if all_v.get(edge).getTag() != 2:
                     currDist = Distances.get(edge)
                     newDist = Distances.get(currNode) + outEdges.get(edge)
                     if newDist < currDist:
@@ -208,18 +208,18 @@ class GraphAlgo(GraphAlgoInterface):
         return Distances, lastPath
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        if self._graph.get_all_v().__contains__(str(id1)) and self._graph.get_all_v().__contains__(str(id2)):
+        if self._graph.get_all_v().__contains__(id1) and self._graph.get_all_v().__contains__(id2):
             p = []
             dist, path = self.dijkstra(id1)
-            if dist[str(id2)] == float('inf'):
+            if dist[id2] == float('inf'):
                 return float('inf'), p
             id = id2
             p.append(id)
             while int(id) != id1:
-                p.append(int(path[str(id)]))
-                id = path[str(id)]
+                p.append(int(path[id]))
+                id = path[id]
             p.reverse()
-            return dist[str(id2)], p
+            return dist[id2], p
         return float('inf'), []
 
     def plot_graph(self) -> None:

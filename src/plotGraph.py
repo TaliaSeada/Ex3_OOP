@@ -49,21 +49,21 @@ def getBall(balls, node):
 def plot(graph):
     min_x = float('inf')
     for i in graph.get_all_v().keys():
-        if graph.get_all_v().get(str(i)).getLocation()[0] < min_x:
-            min_x = graph.get_all_v().get(str(i)).getLocation()[0]
+        if graph.get_all_v().get(i).getLocation()[0] < min_x:
+            min_x = graph.get_all_v().get(i).getLocation()[0]
     max_x = - float('inf')
     for i in graph.get_all_v().keys():
-        if graph.get_all_v().get(str(i)).getLocation()[0] > max_x:
-            max_x = graph.get_all_v().get(str(i)).getLocation()[0]
+        if graph.get_all_v().get(i).getLocation()[0] > max_x:
+            max_x = graph.get_all_v().get(i).getLocation()[0]
 
     min_y = float('inf')
     for i in graph.get_all_v().keys():
-        if graph.get_all_v().get(str(i)).getLocation()[1] < min_y:
-            min_y = graph.get_all_v().get(str(i)).getLocation()[1]
+        if graph.get_all_v().get(i).getLocation()[1] < min_y:
+            min_y = graph.get_all_v().get(i).getLocation()[1]
     max_y = - float('inf')
     for i in graph.get_all_v().keys():
-        if graph.get_all_v().get(str(i)).getLocation()[1] > max_y:
-            max_y = graph.get_all_v().get(str(i)).getLocation()[1]
+        if graph.get_all_v().get(i).getLocation()[1] > max_y:
+            max_y = graph.get_all_v().get(i).getLocation()[1]
 
     pygame.init()
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -73,7 +73,7 @@ def plot(graph):
     nodes = []
     balls = []
     for i in graph.get_all_v().keys():
-        node = graph.get_all_v().get(str(i))
+        node = graph.get_all_v().get(i)
         nodes.append(node)
         ball = circle(node, min_x, max_x, min_y, max_y)
         balls.append(ball)
@@ -84,10 +84,10 @@ def plot(graph):
     for i in nodes:
         ball_i = balls[getBall(balls, i)]
         for j in balls:
-            if str(j.key) in i.getEdgesFromNode():
+            if j.key in i.getEdgesFromNode():
                 ln = line(ball_i, j)
                 lines_out.append(ln)
-            if str(j.key) in i.getEdgesToNode():
+            if j.key in i.getEdgesToNode():
                 ln = line(ball_i, j)
                 lines_in.append(ln)
 
