@@ -11,6 +11,7 @@ For more information - https://github.com/benmoshe/OOP_2021/tree/main/Assignment
 The main task of this project is to run and display algorithms on Directed Weighted Graphs.
 We achieved it by implementing these four main algorithms: <br>
 
+## Classes:
 ### Class Node:
 This class represents the set of operations applicable on a
 node (vertex) in a (directional) weighted graph.
@@ -48,11 +49,6 @@ Implements the EdgeData interface
 - __src__ : source node of the edge
 - __dest__ : destination node of the edge
 - __w__ : weight of the edge
-
-#### The functions that we received with the given interface:
-1. __getSrc()__ - The ID of the source node of this edge.
-2. __getDest()__ - The ID of the destination node of this edge
-3. __getWeight()__ - The weight of this edge (positive value).
 
 #### The functions of this class :
 1. __Edge(src, weight, dest)__ - Constructor that receives the source and destination nodes and weight.
@@ -92,7 +88,12 @@ Implements the functions of the GraphAlgoInterface.
 
 #### The parameter of the class:
 - graph = DiGraph()
-- revGraph = DiGraph()
+- revGraph = DiGraph() <br>
+<b> For the GUI: </b>
+- nodes = []
+- balls = []
+- lines_in = []
+- lines_out = []
 
 #### The functions of this class :
 1. __GraphAlgo(copy = None)__ - Constructor that gets a None type in case we would like to build a copy object. 
@@ -128,13 +129,22 @@ bfs from a node, reverse edges, again bfs from the same node. If we got an integ
     graph was not loaded the original graph should remain "as is".
 13. __plot_graph()__ - Plots the graph.
 
-### Class plotGraph:
-This class plots the graph.
+### SubClass plotGraph:
+This class plots the graph. <br>
 In this class we have created another two classes (circle and line) in order to draw the graph.
 
 #### The functions in this class:
 1. __plot(graph)__ - In this function we create the graph.
 2. __getBall(balls, node)__ - Return the ball object of the given node.
+3. __center(graph, screen, min_x, max_x, min_y, max_y, balls)__ - Prints the center on the graph.
+4. __show(graph, min_x, max_x, min_y, max_y)__ - Displays the graph.
+5. __reset(graph, min_x, max_x, min_y, max_y)__ - Resets the graph to default (without any drawing on it).
+6. __notInt()__ - Prints a massage when the given char is not integer.
+7. __notEnough()__ - Prints a massage when not enough nodes were given.
+8. __notInG()__ - Prints a massage when given node is not in the graph.
+9. __read(graph: GraphAlgo)__ - Gets nodes from the user.
+10. __shortestPath(graph: GraphAlgo, node1, node2)__ - Prints the shortest graph from a given node to another given node on the graph.
+11. __tsp(graph: GraphAlgo, nodes)__ - Prints the shortest graph from a given list of nodes on the graph.
 
 <B> classes: </B> <br>
 <B> circle </B> - This class creates a node and draw it. <br>
@@ -149,10 +159,11 @@ In this class we run all the classes.
 3. __check1()__ 
 4. __check2()__ 
 5. __check3()__
-6. __main__ - calls the check() and the check3() functions
+6. __runAlgoAndWrite(fileName)__ - Takes results and write it to a file
+7. __main__ - calls the check() and the check3() functions
 
 ### Diagram:
-
+![](src/diagram.png)
 ### Results:
    
 

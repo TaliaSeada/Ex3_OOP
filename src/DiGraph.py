@@ -10,7 +10,6 @@ class DiGraph(GraphInterface):
     def __init__(self):
         self._nodes = {}
         self._edges = []
-        self.visited = []
         self.mc = 0
 
     def __repr__(self):
