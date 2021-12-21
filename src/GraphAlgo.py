@@ -359,6 +359,68 @@ def reset(graph, min_x, max_x, min_y, max_y):
                 ln = line(ball_i, j, False)
                 graph.lines_in.append(ln)
 
+def notInt():
+    q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    font = pygame.font.Font(None, 32)
+    clock = pygame.time.Clock()
+
+    problem_text = font.render('NOT AN INTEGER', False, (0, 0, 0), (255, 255, 255))
+    textRect = problem_text.get_rect()
+    textRect.center = (580, 400)
+    q.blit(problem_text, textRect)
+    pygame.display.update()
+
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+    q.fill((200, 210, 200))
+    pygame.display.flip()
+    clock.tick(30)
+
+def notEnough():
+    q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    font = pygame.font.Font(None, 32)
+    clock = pygame.time.Clock()
+
+    problem_text = font.render('NOT ENOUGH NODES', False, (0, 0, 0), (255, 255, 255))
+    textRect = problem_text.get_rect()
+    textRect.center = (580, 400)
+    q.blit(problem_text, textRect)
+    pygame.display.update()
+
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+    q.fill((200, 210, 200))
+    pygame.display.flip()
+    clock.tick(30)
+
+def notInG():
+    q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    font = pygame.font.Font(None, 32)
+    clock = pygame.time.Clock()
+
+    problem_text = font.render('NODE IS NOT IN THE GRAPH', False, (0, 0, 0), (255, 255, 255))
+    textRect = problem_text.get_rect()
+    textRect.center = (580, 400)
+    q.blit(problem_text, textRect)
+    pygame.display.update()
+
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+    q.fill((200, 210, 200))
+    pygame.display.flip()
+    clock.tick(30)
 
 def read(graph: GraphAlgo):
     nodes = []
@@ -366,7 +428,7 @@ def read(graph: GraphAlgo):
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
     input_box = pygame.Rect(550, 300, 500, 32)
-    problem = pygame.Rect(550, 300, 500, 32)
+
     color_inactive = pygame.Color((0, 0, 0))
     color_active = pygame.Color((255, 255, 255))
     color = color_inactive
@@ -398,8 +460,10 @@ def read(graph: GraphAlgo):
                                 if int(text) in graph.get_graph().get_all_v().keys():
                                     nodes.append(int(text))
                                 else:
+                                    notInG()
                                     print("node is not in graph")
                         except Exception as e:
+                            notInt()
                             print("not an integer")
                         text = ''
                     elif event.key == pygame.K_BACKSPACE:
@@ -424,6 +488,7 @@ def read(graph: GraphAlgo):
     if len(nodes) == 2:
         shortestPath(graph, nodes[0], nodes[1])
     elif len(nodes) == 0 or len(nodes) == 1:
+        notEnough()
         print("not enough nodes")
     else:
         tsp(graph, nodes)
