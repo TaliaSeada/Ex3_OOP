@@ -1,18 +1,4 @@
 # Third Assignment - OOP Course
-## Table Of Content:
-### Credits
-### Intro
-### Implementation
-- Class Node
-- Class Edge
-- Class DiGraph
-- Class GraphAlgo
-- Class plotGraph
-- Class main
-### Results
-### How to interact with the project
-
-
 ## Credits:
 This Project made by: Talia Seada (ID: 211551601) and Lior Breitman (ID: 212733257). <br>
 __NOTE:__ In this projects the group members used "Code With Me" in the Pycharm workspace, so most of the commits are
@@ -24,19 +10,6 @@ For more information - https://github.com/benmoshe/OOP_2021/tree/main/Assignment
 ### The main Task:
 The main task of this project is to run and display algorithms on Directed Weighted Graphs.
 We achieved it by implementing these four main algorithms: <br>
-
-#### 1. shortestPath: 
-In this algorithm we need to find the shortest path between two given nodes (return weight of path or list of nodes in this path).
-
-#### 2. center:
-In this algorithm we need to find the center node of a graph. 
-
-#### 3. isConnected:
-In this algorithm we need to find if there is a path between every two nodes in the graph.
-
-#### 4. tsp:
-Traveling Sales Man problem.
-
 
 ### Class Node:
 This class represents the set of operations applicable on a
@@ -99,7 +72,7 @@ This class represents a Directional Weighted Graph, implementing the GraphInterf
 - __int MC = 0__ : Mode Count
 
 #### The functions of this class :
-1. __Graph()__ - Default constructor
+1. __DiGraph()__ - Default constructor
 2. __get_graph()__ - Returns the graph
 3. __add_node(node_id, pos = None)__ - adds a new node to the graph with the given node.
 4. __all_in_edges_of_node()__ - Returns all the edges that go to the graph.
@@ -118,83 +91,68 @@ This class represents a Directed (positive) Weighted Graph Theory Algorithms.
 Implements the functions of the GraphAlgoInterface.
 
 #### The parameter of the class:
-- Graph graph
+- graph = DiGraph()
+- revGraph = DiGraph()
 
-#### The functions that we received with the given interface:
-1. __init(DirectedWeightedGraph g)__ - Inits the graph on which this set of algorithms operates on.
-2. __getGraph()__ - Returns the underlying graph of which this class works.
-3. __copy()__ - Computes a deep copy of this weighted graph.
+#### The functions of this class :
+1. __GraphAlgo(copy = None)__ - Constructor that gets a None type in case we would like to build a copy object. 
+2. __get_graph()__ - Returns the underlying graph of which this class works.
+3. __get_revGraph()__ - Returns the underlying reversed graph of which this class works.
 4. __isConnected()__ - Returns true if and only if (iff) there is a valid path from each node to each other node.  
    In this method we used bfs algorithm:
 bfs from a node, reverse edges, again bfs from the same node. If we got an integer that is smaller than infinity in both, it means the graph is strongly connected.
-5. __shortestPathDist(int src, int dest)__ - Computes the length of the shortest path between src to dest.
-   In this method we used Dijkstra algorithm to find the shortest path distance.
-6. __shortestPath(int src, int dest)__ - Computes the shortest path between src to dest - as an ordered List of nodes.
-   In this method we used Dijkstra algorithm to find the shortest path.
-7. __center()__ - Finds the api.NodeData which minimizes the max distance to all the other nodes.
-   In this method we iterate over the nodes of the graph and run the Dijkstra algorithm on each one of them.
-   then, from each hashMap of distances of every node we got, we need to take the longest path.
-   then take the minimum longest path of all the nodes.
-8. __tsp(List<NodeData> cities)__ - Computes a list of consecutive nodes which go over all the nodes in cities.
-   the sum of the weights of all the consecutive (pairs) of nodes (directed) is the "cost" of the solution -
-   the lower the better.
-   in this method we iterate over the given list and run the Dijkstra algorithm on the first node.
-   After running once on a node, take the shortest path to a node (it's inside the list).
-   Then, run again, but now on the node we took from the last iteration.
-   The function stops when we passed all the nodes.
-9. __save(String file)__ - Saves this weighted (directed) graph to the given file name - in JSON format.
-   Here we use the classes "nodeToJson" and "edgeToJson" to save the information into a Json file.
-
-10. __load(String file)__ - This method loads a graph to this graph algorithm.
-    if the file was successfully loaded - the underlying graph of this class will be changed (to the loaded one), in case the
-    graph was not loaded the original graph should remain "as is".
-
-#### The functions that we added to this class (not included in the interface):
-1. __Dijkstra(int sourceNode)__ - This method finds the shortest path between a given node to the rest of the graph's nodes using Dijkstra Algorithm.
-2. __bfs(int nodeKey,Graph graph)__ - This method runs over all the nodes in the graph using the BFS algorithm, and checks if these nodes have edges connected to them.
+5. __bfs(nodeKey,graph)__ - This method runs over all the nodes in the graph using the BFS algorithm, and checks if these nodes have edges connected to them.
    for bfs algorithm, we will change the tags of the graphs:
    - 0 for undiscovered nodes "white".
    - 1 for discovered but not finished "grey".
    - 2 for finished nodes "black".
-3. __createOppositeGraph()__ - This method creates an opposite graph of this graph.
-
+6. __min_index(srcNode, dist_v, node_lst, passed)__ - This function returns the index of the minimum node
+7. __dijkstra(src)__ - This method finds the shortest path between a given node to the rest of the graph's nodes using Dijkstra Algorithm.
+8. __shortest_path(id1, id2)__ - Computes the shortest path between id1 to id2 - as an ordered List of nodes.
+   In this method we used Dijkstra algorithm to find the shortest path.
+9. __centerPoint()__ - Finds the node which minimizes the max distance to all the other nodes.
+   In this method we iterate over the nodes of the graph and run the Dijkstra algorithm on each one of them.
+   then, from each hashMap of distances of every node we got, we need to take the longest path.
+   then take the minimum longest path of all the nodes.
+10. __TSP(node_list)__ - Computes a list of consecutive nodes which go over all the nodes in cities.
+    the sum of the weights of all the consecutive (pairs) of nodes (directed) is the "cost" of the solution -
+    the lower the better.
+    in this method we iterate over the given list and run the Dijkstra algorithm on the first node.
+    After running once on a node, take the shortest path to a node (it's inside the list).
+    Then, run again, but now on the node we took from the last iteration.
+    The function stops when we passed all the nodes.
+11. __save_to_json(file_name)__ - Saves this weighted (directed) graph to the given file name - in JSON format.
+    Here we use the classes "nodeToJson" and "edgeToJson" to save the information into a Json file.
+12. __load_from_json(file_name)__ - This method loads a graph to this graph algorithm.
+    if the file was successfully loaded - the underlying graph of this class will be changed (to the loaded one), in case the
+    graph was not loaded the original graph should remain "as is".
+13. __plot_graph()__ - Plots the graph.
 
 ### Class plotGraph:
-This class is used to draw a graph.
+This class plots the graph.
+In this class we have created another two classes (circle and line) in order to draw the graph.
 
 #### The functions in this class:
-__createMainWindow(String path)__ - In this function we create the main window.
-__activateGUI(String path)__ - In this function we activate the GUI.
+1. __plot(graph)__ - In this function we create the graph.
+2. __getBall(balls, node)__ - Return the ball object of the given node.
+
+<B> classes: </B> <br>
+<B> circle </B> - This class creates a node and draw it. <br>
+<B> line </B> - This class creates a line and draw it.
 
 ### Class main:
-In this class we run all of the classes.
+In this class we run all the classes.
 
 #### The functions in this class:
-1. __showGraph(List<GeoLocation> scores,ArrayList<EdgeData> edgesToPaint, NodeData center)__ - Constructor
-2. __paintComponent(Graphics g)__ 
-3. __createAndShowGui(DirectedWeightedGraph g, ArrayList<EdgeData> toPaint, NodeData center)__ 
-4. __drawArrowLine(Graphics g, int x1, int y1, int x2, int y2, int d, int h)__ 
-
-## How to interact with the project:
-### Run:
-In order to run the project:
-1. Enter the cmd and inside the cmd enter to the file where the jar is.
-2. Write the command: java -jar Ex2.jar G1.json 
-    - Where "G1.json" you need to write the right path of the graph that you want to load.
-   
-
-### GUI:
-How to use the menu window:
-1. __file__ : Here you can load a new graph to the program, or save the current graph to json file.
-2. __Graph__ : Here you can interact with your graph
-   - show graph - the graph will appear
-   - Add node - adds new node to the graph
-   - remove node - removes node from the graph
-   - connect between 2 nodes - creates new edge between 2 chosen nodes
-   - disconnect 2 nodes - deletes edge that connected between this 2 nodes.
-3. __Algorithms__ : Here you can choose which algorithm to run on the graph.
+1. __check()__ - calls the check0(), check1() and the check2() functions
+2. __check0()__ 
+3. __check1()__ 
+4. __check2()__ 
+5. __check3()__
+6. __main__ - calls the check() and the check3() functions
 
 ### Diagram:
+![diagram](https://user-images.githubusercontent.com/78349342/146919372-64451220-2ba0-43c6-9a8c-33a9b19eaafe.png)
 
 ### Results:
    
