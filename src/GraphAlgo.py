@@ -6,7 +6,11 @@ import random
 from src.DiGraph import DiGraph
 from src.api.GraphAlgoInterface import GraphAlgoInterface
 from src.api.GraphInterface import GraphInterface
-from src.plotGraph import plot
+
+import pygame
+import pygame_widgets
+from pygame_widgets.button import Button
+from src.Node import Node
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -15,9 +19,17 @@ class GraphAlgo(GraphAlgoInterface):
         if not copy:
             self._graph = DiGraph()
             self._revGraph = DiGraph()
+            self.nodes = []
+            self.balls = []
+            self.lines_in = []
+            self.lines_out = []
         else:
             self._graph = copy
             self._revGraph = copy.reverse_graph(copy)
+            self.nodes = []
+            self.balls = []
+            self.lines_in = []
+            self.lines_out = []
 
     def get_graph(self) -> GraphInterface:
         return self._graph
@@ -223,4 +235,301 @@ class GraphAlgo(GraphAlgoInterface):
         return float('inf'), []
 
     def plot_graph(self) -> None:
-        plot(self._graph)
+        plot(self)
+
+
+# graph plot:
+SCREEN_WIDTH = 1300
+SCREEN_HEIGHT = 800
+
+
+class circle:
+    def __init__(self, node: Node, min_x, max_x, min_y, max_y, center: bool):
+        if center:
+            self.key = node.getKey()
+            self.x = ((node.getLocation()[0] - min_x) / (max_x - min_x)) * SCREEN_WIDTH
+            self.y = ((node.getLocation()[1] - min_y) / (max_y - min_y)) * SCREEN_HEIGHT
+            self._radius = 10
+            self.color = (255, 255, 255)
+        else:
+            self.key = node.getKey()
+            self.x = ((node.getLocation()[0] - min_x) / (max_x - min_x)) * SCREEN_WIDTH
+            self.y = ((node.getLocation()[1] - min_y) / (max_y - min_y)) * SCREEN_HEIGHT
+            self._radius = 3
+            self.color = (0, 0, 0)
+
+    def drawBall(self, screen):
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self._radius, 10)
+
+
+class line:
+    def __init__(self, startBall: circle, endBall: circle, draw: bool):
+        if draw:
+            self._src = (startBall.x, startBall.y)
+            self._dest = (endBall.x, endBall.y)
+            self.color = (255, 0, 0)
+        else:
+            self._src = (startBall.x, startBall.y)
+            self._dest = (endBall.x, endBall.y)
+            self.color = (70, 70, 70)
+
+    def drawLine(self, screen, inOut):
+        pygame.draw.line(screen, self.color, self._src, self._dest, 2)
+        size = 4
+        if inOut == "out":
+            x = (self._dest[0], self._dest[1])
+            y = (self._dest[0] + size, self._dest[1] - size)
+            z = (self._dest[0] + size, self._dest[1] + size)
+            pygame.draw.polygon(screen, (0, 0, 0), [x, y, z])
+
+        if inOut == "in":
+            x = (self._dest[0] - size, self._dest[1] - size)
+            y = (self._dest[0] - size, self._dest[1] + size)
+            z = (self._dest[0], self._dest[1])
+            pygame.draw.polygon(screen, (0, 0, 0), [x, y, z])
+
+
+def getBall(balls, node):
+    j = 0
+    for i in balls:
+        if i.key == node.getKey():
+            return j
+        j += 1
+
+
+def center(graph, screen, min_x, max_x, min_y, max_y, balls):
+    node, dist = graph.centerPoint()
+    if node != -1:
+        ball = circle(graph.get_graph().get_all_v().get(node), min_x, max_x, min_y, max_y, True)
+        ind = getBall(balls, graph.get_graph().get_all_v().get(node))
+        balls[ind] = ball
+        ball.drawBall(screen)
+        pygame.display.update()
+        pygame.display.flip()
+    else:
+        print("there is no center")
+
+
+def show(graph, min_x, max_x, min_y, max_y):
+    # set nodes
+    for i in graph.get_graph().get_all_v().keys():
+        node = graph.get_graph().get_all_v().get(i)
+        graph.nodes.append(node)
+        ball = circle(node, min_x, max_x, min_y, max_y, False)
+        graph.balls.append(ball)
+
+    # set edges
+    for i in graph.nodes:
+        ball_i = graph.balls[getBall(graph.balls, i)]
+        for j in graph.balls:
+            if j.key in i.getEdgesFromNode():
+                ln = line(ball_i, j, False)
+                graph.lines_out.append(ln)
+            if j.key in i.getEdgesToNode():
+                ln = line(ball_i, j, False)
+                graph.lines_in.append(ln)
+
+
+def reset(graph, min_x, max_x, min_y, max_y):
+    graph.balls = []
+    graph.nodes = []
+    graph.lines_in = []
+    graph.lines_out = []
+    # reset nodes
+    for i in graph.get_graph().get_all_v().keys():
+        node = graph.get_graph().get_all_v().get(i)
+        graph.nodes.append(node)
+        ball = circle(node, min_x, max_x, min_y, max_y, False)
+        graph.balls.append(ball)
+
+    # reset edges
+    for i in graph.nodes:
+        ball_i = graph.balls[getBall(graph.balls, i)]
+        for j in graph.balls:
+            if j.key in i.getEdgesFromNode():
+                ln = line(ball_i, j, False)
+                graph.lines_out.append(ln)
+            if j.key in i.getEdgesToNode():
+                ln = line(ball_i, j, False)
+                graph.lines_in.append(ln)
+
+
+def read(graph: GraphAlgo):
+    nodes = []
+    q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    font = pygame.font.Font(None, 32)
+    clock = pygame.time.Clock()
+    input_box = pygame.Rect(550, 300, 500, 32)
+    problem = pygame.Rect(550, 300, 500, 32)
+    color_inactive = pygame.Color((0, 0, 0))
+    color_active = pygame.Color((255, 255, 255))
+    color = color_inactive
+    active = False
+    text = ''
+    done = False
+
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # If the user clicked on the input_box rect.
+                if input_box.collidepoint(event.pos):
+                    # Toggle the active variable.
+                    active = not active
+                else:
+                    active = False
+                # Change the current color of the input box.
+                color = color_active if active else color_inactive
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_RETURN:
+                        if text == '':
+                            done = True
+                            break
+                        try:
+                            if int(text) not in nodes:
+                                if int(text) in graph.get_graph().get_all_v().keys():
+                                    nodes.append(int(text))
+                                else:
+                                    print("node is not in graph")
+                        except Exception as e:
+                            print("not an integer")
+                        text = ''
+                    elif event.key == pygame.K_BACKSPACE:
+                        text = text[:-1]
+                    else:
+                        text += event.unicode
+
+        q.fill((200, 210, 200))
+        # Render the current text.
+        txt_surface = font.render(text, True, color)
+        # Resize the box if the text is too long.
+        width = max(200, txt_surface.get_width() + 10)
+        input_box.w = width
+        # Blit the text.
+        q.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        # Blit the input_box rect.
+        pygame.draw.rect(q, color, input_box, 2)
+
+        pygame.display.flip()
+        clock.tick(30)
+
+    if len(nodes) == 2:
+        shortestPath(graph, nodes[0], nodes[1])
+    elif len(nodes) == 0 or len(nodes) == 1:
+        print("not enough nodes")
+    else:
+        tsp(graph, nodes)
+
+
+def shortestPath(graph: GraphAlgo, node1, node2):
+    dist, path = graph.shortest_path(node1, node2)
+    # reset edges
+    for i in path:
+        node = graph.get_graph().get_all_v().get(i)
+        ball_i = graph.balls[getBall(graph.balls, node)]
+        for j in graph.balls:
+            if j.key in node.getEdgesFromNode() and j.key in path:
+                ln = line(ball_i, j, True)
+                graph.lines_out.append(ln)
+            if j.key in node.getEdgesToNode() and j.key in path:
+                ln = line(ball_i, j, True)
+                graph.lines_in.append(ln)
+
+
+def tsp(graph: GraphAlgo, nodes):
+    path, dist = graph.TSP(nodes)
+    for i in path:
+        node = graph.get_graph().get_all_v().get(i)
+        ball_i = graph.balls[getBall(graph.balls, node)]
+        for j in graph.balls:
+            if j.key in node.getEdgesFromNode() and j.key in path:
+                ln = line(ball_i, j, True)
+                graph.lines_out.append(ln)
+            if j.key in node.getEdgesToNode() and j.key in path:
+                ln = line(ball_i, j, True)
+                graph.lines_in.append(ln)
+
+
+def plot(graph: GraphAlgo):
+    min_x = float('inf')
+    max_x = - float('inf')
+
+    min_y = float('inf')
+    max_y = - float('inf')
+
+    for i in graph.get_graph().get_all_v().keys():
+        if graph.get_graph().get_all_v().get(i).getLocation()[0] < min_x:
+            min_x = graph.get_graph().get_all_v().get(i).getLocation()[0]
+
+    for i in graph.get_graph().get_all_v().keys():
+        if graph.get_graph().get_all_v().get(i).getLocation()[0] > max_x:
+            max_x = graph.get_graph().get_all_v().get(i).getLocation()[0]
+
+    for i in graph.get_graph().get_all_v().keys():
+        if graph.get_graph().get_all_v().get(i).getLocation()[1] < min_y:
+            min_y = graph.get_graph().get_all_v().get(i).getLocation()[1]
+
+    for i in graph.get_graph().get_all_v().keys():
+        if graph.get_graph().get_all_v().get(i).getLocation()[1] > max_y:
+            max_y = graph.get_graph().get_all_v().get(i).getLocation()[1]
+
+    pygame.init()
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    pygame.display.set_caption("menu")
+
+    running = True
+    show(graph, min_x, max_x, min_y, max_y)
+    # run the plot
+    clock = pygame.time.Clock()
+    while running:
+        clock.tick(10)
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+
+        # Clear the screan
+        screen.fill((200, 210, 200))
+        pygame_widgets.update(events)
+
+        resetB = Button(
+            screen, 0, 0, 150, 40, text='reset changes',
+            fontSize=25, margin=5,
+            inactiveColour=(255, 255, 255),
+            pressedColour=(70, 70, 70), radius=0,
+            onClick=lambda: reset(graph, min_x, max_x, min_y, max_y)
+        )
+        centerB = Button(
+            screen, 150, 0, 100, 40, text='center',
+            fontSize=25, margin=5,
+            inactiveColour=(255, 255, 255),
+            pressedColour=(70, 70, 70), radius=0,
+            onClick=lambda: center(graph, screen, min_x, max_x, min_y, max_y, graph.balls)
+        )
+        shorterB = Button(
+            screen, 250, 0, 150, 40, text='shortest path',
+            fontSize=25, margin=5,
+            inactiveColour=(255, 255, 255),
+            pressedColour=(70, 70, 70), radius=0,
+            onClick=lambda: read(graph)
+        )
+        TSPB = Button(
+            screen, 400, 0, 100, 40, text='TSP',
+            fontSize=25, margin=5,
+            inactiveColour=(255, 255, 255),
+            pressedColour=(70, 70, 70), radius=0,
+            onClick=lambda: read(graph)
+        )
+
+        for i in graph.balls:
+            i.drawBall(screen)
+        for i in graph.lines_out:
+            i.drawLine(screen, "out")
+        for i in graph.lines_in:
+            i.drawLine(screen, "in")
+        pygame.display.update()
+        pygame.display.flip()
+
+    pygame.quit()
