@@ -20,6 +20,7 @@ class main{
 +check1
 +check2
 +check3
++runAlgoAndWrite
 }
 
 class Edge{
@@ -58,6 +59,15 @@ class DiGraph{
 class plotGraph{
 +getBall
 +plot
++center
++show
++reset
++notInt
++notEnough
++notInG
++read
++shortestPath
++tsp
 }
 
 class circle{
