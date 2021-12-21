@@ -256,7 +256,7 @@ class circle:
             self.x = ((node.getLocation()[0] - min_x) / (max_x - min_x)) * SCREEN_WIDTH
             self.y = ((node.getLocation()[1] - min_y) / (max_y - min_y)) * SCREEN_HEIGHT
             self._radius = 10
-            self.color = (255, 255, 255)
+            self.color = (255, 0, 0)
         else:
             self.key = node.getKey()
             self.x = ((node.getLocation()[0] - min_x) / (max_x - min_x)) * SCREEN_WIDTH

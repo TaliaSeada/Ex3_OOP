@@ -171,8 +171,14 @@ if __name__ == '__main__':
     # df = pd.DataFrame(columns=["Name", "Load", "Center", "TSP 10 nodes", "TSP 100 nodes", "TSP 1000 nodes", "TSP 10000 nodes"])
     # df.to_csv('../data/results.csv', index=False)
 
-    file1 = "/home/bravo8234/LargeConnectedGraphs/10000Nodes.json"
-    runAlgoAndWrite(file1)
+    # file1 = "/home/bravo8234/LargeConnectedGraphs/10000Nodes.json"
+    # runAlgoAndWrite(file1)
+
+    file = '../data/G1.json'
+    ga = GraphAlgo()
+    ga.load_from_json(file)
+    ga.plot_graph()
+
 
 
 
