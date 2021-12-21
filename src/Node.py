@@ -10,21 +10,20 @@ class Node:
         self._tag = 0
 
     def __repr__(self):
-        s = str(self._key) + ": |edges out| " + str(len(self._edgesFromNode)) + " |edges in| " + str(len(self._edgesToNode))
-
+        s = str(str(self._key) + ": |edges out| " + str(len(self._edgesFromNode)) + " |edges in| " + str(len(self._edgesToNode)))
         return repr(s)
 
     def addEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
-            self._edgesFromNode[str(edge.getDestNode())] = edge.getWeight()
+            self._edgesFromNode[edge.getDestNode()] = edge.getWeight()
         elif edge.getDestNode() == self._key:
-            self._edgesToNode[str(edge.getSrcNode())] = edge.getWeight()
+            self._edgesToNode[edge.getSrcNode()] = edge.getWeight()
 
     def removeEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
-            del self._edgesFromNode[str(edge.getDestNode())]
+            del self._edgesFromNode[edge.getDestNode()]
         elif edge.getDestNode() == self._key:
-            del self._edgesToNode[str(edge.getSrcNode())]
+            del self._edgesToNode[edge.getSrcNode()]
 
     # getters
     def getKey(self):
