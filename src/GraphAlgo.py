@@ -123,6 +123,7 @@ class GraphAlgo(GraphAlgoInterface):
             minDist = float('inf')
             minIndex = -1
             for v in self._graph.get_all_v().keys():
+                print(v)
                 dist, path = self.dijkstra(v)
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
@@ -135,8 +136,10 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             file = open(file_name)
             data = json.load(file)
+            counter = 0
             for i in data["Nodes"]:
                 id = int(i['id'])
+                print("node num: " + str(id))
                 if i.get('pos') is not None:
                     pos = i['pos']
                     xyz = pos.split(',')
@@ -151,12 +154,15 @@ class GraphAlgo(GraphAlgoInterface):
                     self._graph.add_node(id, (x, y, z))
                     self._revGraph.add_node(id, (x, y, z))
             for i in data["Edges"]:
+                print("edge number: " + str(counter))
+                counter += 1
                 src = int(i["src"])
                 dest = int(i["dest"])
                 weight = float(i["w"])
                 self._graph.add_edge(src, dest, weight)
                 self._revGraph.add_edge(dest, src, weight)
             file.close()
+            print("finished loading")
             return True
         except Exception as e:
             print(e)
