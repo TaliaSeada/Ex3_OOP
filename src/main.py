@@ -174,7 +174,7 @@ if __name__ == '__main__':
     # file1 = "/home/bravo8234/LargeConnectedGraphs/10000Nodes.json"
     # runAlgoAndWrite(file1)
 
-    file = '../data/G1.json'
+    file = '../data/G2.json'
     ga = GraphAlgo()
     ga.load_from_json(file)
     ga.plot_graph()

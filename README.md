@@ -152,7 +152,6 @@ In this class we run all the classes.
 6. __main__ - calls the check() and the check3() functions
 
 ### Diagram:
-![diagram](https://user-images.githubusercontent.com/78349342/146919372-64451220-2ba0-43c6-9a8c-33a9b19eaafe.png)
 
 ### Results:
    
