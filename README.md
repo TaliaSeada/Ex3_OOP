@@ -142,9 +142,10 @@ In this class we have created another two classes (circle and line) in order to 
 6. __notInt()__ - Prints a massage when the given char is not integer.
 7. __notEnough()__ - Prints a massage when not enough nodes were given.
 8. __notInG()__ - Prints a massage when given node is not in the graph.
-9. __read(graph: GraphAlgo)__ - Gets nodes from the user.
-10. __shortestPath(graph: GraphAlgo, node1, node2)__ - Prints the shortest graph from a given node to another given node on the graph.
-11. __tsp(graph: GraphAlgo, nodes)__ - Prints the shortest graph from a given list of nodes on the graph.
+9. __nodeIsNotIn()__ - Prints a massage when the graph is not connected and not have a center.
+10. __read(graph: GraphAlgo)__ - Gets nodes from the user.
+11. __shortestPath(graph: GraphAlgo, node1, node2)__ - Prints the shortest graph from a given node to another given node on the graph.
+12. __tsp(graph: GraphAlgo, nodes)__ - Prints the shortest graph from a given list of nodes on the graph.
 
 <B> classes: </B> <br>
 <B> circle </B> - This class creates a node and draw it. <br>
@@ -165,9 +166,10 @@ In this class we run all the classes.
 ### GUI:
 When running the plot_graph() in the GraphAlgo class we get here. <br>
 How to use the buttons:
-1. Reset changes button : This button reset the graph to the default 
+1. Reset changes button : This button reset the graph to the default. 
 2. Center button : This button prints the center node on the graph.
-3. 
+3. ShortestPath button : This button ask from the user to insert two nodes (integers) and print the shortest path on the graph.
+4. TSP button : This button ask from the user to insert two or more nodes (integers) and print the TSP path on the graph.
 
 ### Diagram:
 

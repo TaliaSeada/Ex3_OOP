@@ -70,6 +70,7 @@ class plotGraph{
 +notInt
 +notEnough
 +notInG
++nodeIsNotIn
 +read
 +shortestPath
 +tsp

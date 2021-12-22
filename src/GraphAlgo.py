@@ -123,7 +123,7 @@ class GraphAlgo(GraphAlgoInterface):
             minDist = float('inf')
             minIndex = -1
             for v in self._graph.get_all_v().keys():
-                print(v)
+                # print(v)
                 dist, path = self.dijkstra(v)
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
@@ -139,7 +139,7 @@ class GraphAlgo(GraphAlgoInterface):
             counter = 0
             for i in data["Nodes"]:
                 id = int(i['id'])
-                print("node num: " + str(id))
+                # print("node num: " + str(id))
                 if i.get('pos') is not None:
                     pos = i['pos']
                     xyz = pos.split(',')
@@ -154,7 +154,7 @@ class GraphAlgo(GraphAlgoInterface):
                     self._graph.add_node(id, (x, y, z))
                     self._revGraph.add_node(id, (x, y, z))
             for i in data["Edges"]:
-                print("edge number: " + str(counter))
+                # print("edge number: " + str(counter))
                 counter += 1
                 src = int(i["src"])
                 dest = int(i["dest"])
@@ -162,7 +162,7 @@ class GraphAlgo(GraphAlgoInterface):
                 self._graph.add_edge(src, dest, weight)
                 self._revGraph.add_edge(dest, src, weight)
             file.close()
-            print("finished loading")
+            # print("finished loading")
             return True
         except Exception as e:
             print(e)
@@ -313,6 +313,7 @@ def center(graph, screen, min_x, max_x, min_y, max_y, balls):
         pygame.display.update()
         pygame.display.flip()
     else:
+        nodeIsNotIn()
         print("there is no center")
 
 
@@ -386,6 +387,27 @@ def notEnough():
     clock = pygame.time.Clock()
 
     problem_text = font.render('NOT ENOUGH NODES', False, (0, 0, 0), (255, 255, 255))
+    textRect = problem_text.get_rect()
+    textRect.center = (580, 400)
+    q.blit(problem_text, textRect)
+    pygame.display.update()
+
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+    q.fill((200, 210, 200))
+    pygame.display.flip()
+    clock.tick(30)
+
+def nodeIsNotIn():
+    q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    font = pygame.font.Font(None, 32)
+    clock = pygame.time.Clock()
+
+    problem_text = font.render('THERE IS NO CENTER', False, (0, 0, 0), (255, 255, 255))
     textRect = problem_text.get_rect()
     textRect.center = (580, 400)
     q.blit(problem_text, textRect)
@@ -546,7 +568,6 @@ def plot(graph: GraphAlgo):
         if graph.get_graph().get_all_v().get(i).getLocation()[1] > max_y:
             max_y = graph.get_graph().get_all_v().get(i).getLocation()[1]
 
-    pygame.init()
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     pygame.display.set_caption("menu")
 
@@ -563,7 +584,6 @@ def plot(graph: GraphAlgo):
 
         # Clear the screan
         screen.fill((200, 210, 200))
-        pygame_widgets.update(events)
 
         resetB = Button(
             screen, 0, 0, 150, 40, text='reset changes',
@@ -600,7 +620,8 @@ def plot(graph: GraphAlgo):
             i.drawLine(screen, "out")
         for i in graph.lines_in:
             i.drawLine(screen, "in")
-        pygame.display.update()
+
+        pygame_widgets.update(events)
         pygame.display.flip()
 
-    pygame.quit()
+

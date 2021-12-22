@@ -1,6 +1,8 @@
 import time
 
 import pandas as pd
+import pygame
+
 from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
 from tests import TestGraphAlgo
@@ -107,6 +109,7 @@ def check3():
     print(g_algo.TSP([1, 2, 4]))
     g_algo.plot_graph()
 
+
 def runAlgoAndWrite(fileName):
     df = pd.read_csv('../data/results.csv')
     row = []
@@ -163,26 +166,18 @@ def runAlgoAndWrite(fileName):
     df.to_csv('../data/results.csv', index=False)
 
 
-
-
 if __name__ == '__main__':
-    # check()
-    # check3()
+    pygame.init()
+    check()
+    check3()
+    pygame.quit()
     # df = pd.DataFrame(columns=["Name", "Load", "Center", "TSP 10 nodes", "TSP 100 nodes", "TSP 1000 nodes", "TSP 10000 nodes"])
     # df.to_csv('../data/results.csv', index=False)
 
     # file1 = "/home/bravo8234/LargeConnectedGraphs/10000Nodes.json"
     # runAlgoAndWrite(file1)
 
-    file = '../data/G2.json'
-    ga = GraphAlgo()
-    ga.load_from_json(file)
-    ga.plot_graph()
-
-
-
-
-
-
-
-
+    # file = '../data/G2.json'
+    # ga = GraphAlgo()
+    # ga.load_from_json(file)
+    # ga.plot_graph()
