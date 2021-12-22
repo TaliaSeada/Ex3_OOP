@@ -111,35 +111,33 @@ def check3():
 
 
 def runAlgoAndWrite(fileName):
-    df = pd.read_csv('../data/results.csv')
+    df = pd.read_csv('../data/resultsT.csv')
     row = []
     algo = GraphAlgo()
     row.append(fileName.split("/")[-1])
     load_startTime = time.time_ns()
     algo.load_from_json(fileName)
     load_endTime = time.time_ns()
-    row.append((load_endTime - load_startTime) / 1000000000)
-    print("time to load graph: " + str((load_endTime - load_startTime) / 1000000000) + " seconds")
-    # algo.plot_graph()
+    row.append((load_endTime - load_startTime))
+    print("time to load graph: " + str((load_endTime - load_startTime)) + " seconds")
     start_Time = time.time_ns()
     print(algo.centerPoint())
     end_Time = time.time_ns()
-    row.append((end_Time - start_Time) / 1000000000)
-
-    print("time to check center: " + str((end_Time - start_Time) / 1000000000) + " seconds")
+    row.append((end_Time - start_Time))
+    print("time to check center: " + str((end_Time - start_Time)) + " seconds")
     cities = TestGraphAlgo.createCities(10, algo)
     start_Time = time.time_ns()
     print(algo.TSP(cities))
     end_Time = time.time_ns()
-    row.append((end_Time - start_Time) / 1000000000)
-    print("time to run tsp for 10 cities: " + str((end_Time - start_Time) / 1000000000) + " seconds")
+    row.append((end_Time - start_Time))
+    print("time to run tsp for 10 cities: " + str((end_Time - start_Time)) + " seconds")
     if len(algo.get_graph().get_all_v()) > 100:
         cities = TestGraphAlgo.createCities(100, algo)
         start_Time = time.time_ns()
         print(algo.TSP(cities))
         end_Time = time.time_ns()
-        row.append((end_Time - start_Time) / 1000000000)
-        print("time to run tsp for 100 cities: " + str((end_Time - start_Time) / 1000000000) + " seconds")
+        row.append((end_Time - start_Time))
+        print("time to run tsp for 100 cities: " + str((end_Time - start_Time)) + " seconds")
     else:
         row.append(0)
     if len(algo.get_graph().get_all_v()) > 1000:
@@ -147,8 +145,8 @@ def runAlgoAndWrite(fileName):
         start_Time = time.time_ns()
         print(algo.TSP(cities))
         end_Time = time.time_ns()
-        row.append((end_Time - start_Time) / 1000000000)
-        print("time to run tsp for 1000 cities: " + str((end_Time - start_Time) / 1000000000) + " seconds")
+        row.append((end_Time - start_Time))
+        print("time to run tsp for 1000 cities: " + str((end_Time - start_Time)) + " seconds")
     else:
         row.append(0)
     if len(algo.get_graph().get_all_v()) > 10000:
@@ -156,14 +154,14 @@ def runAlgoAndWrite(fileName):
         start_Time = time.time_ns()
         print(algo.TSP(cities))
         end_Time = time.time_ns()
-        row.append((end_Time - start_Time) / 1000000000)
-        print("time to run tsp for 10000 cities: " + str((end_Time - start_Time) / 1000000000) + " seconds")
+        row.append((end_Time - start_Time))
+        print("time to run tsp for 10000 cities: " + str((end_Time - start_Time)) + " seconds")
     else:
         row.append(0)
     print(df.columns)
     series = pd.Series(row, index=df.columns)
     df = df.append(series, ignore_index=True)
-    df.to_csv('../data/results.csv', index=False)
+    df.to_csv('../data/resultsT.csv', index=False)
 
 
 if __name__ == '__main__':
@@ -171,13 +169,7 @@ if __name__ == '__main__':
     check()
     check3()
     pygame.quit()
+
     # df = pd.DataFrame(columns=["Name", "Load", "Center", "TSP 10 nodes", "TSP 100 nodes", "TSP 1000 nodes", "TSP 10000 nodes"])
-    # df.to_csv('../data/results.csv', index=False)
+    # df.to_csv('../data/resultsT.csv', index=False)
 
-    # file1 = "/home/bravo8234/LargeConnectedGraphs/10000Nodes.json"
-    # runAlgoAndWrite(file1)
-
-    # file = '../data/G2.json'
-    # ga = GraphAlgo()
-    # ga.load_from_json(file)
-    # ga.plot_graph()

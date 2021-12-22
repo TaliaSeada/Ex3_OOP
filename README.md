@@ -174,6 +174,6 @@ How to use the buttons:
 ### Diagram:
 ![](src/diagram.png)
 ### Results:
-   
+Time of running each algorithm in each graph (name), when time is in seconds.
 
 
