@@ -174,7 +174,7 @@ How to use the buttons:
 ### Diagram:
 ![](src/diagram.png)
 ### Results:
-Time of running each algorithm in each graph (name), when time is in milliseconds.
+Time of running each algorithm in each graph (name), when time is in nanoseconds.
 ![image](https://user-images.githubusercontent.com/78349342/147124465-aa80df58-ad2c-4c66-b5fe-a5eabb56d8b0.png)
 
 
