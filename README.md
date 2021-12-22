@@ -172,7 +172,7 @@ How to use the buttons:
 4. TSP button : This button ask from the user to insert two or more nodes (integers) and print the TSP path on the graph.
 
 ### Diagram:
-
+![](src/diagram.png)
 ### Results:
    
 
