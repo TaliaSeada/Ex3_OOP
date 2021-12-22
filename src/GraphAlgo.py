@@ -296,6 +296,7 @@ SCREEN_HEIGHT = 800
 
 class circle:
     def __init__(self, node: Node, min_x, max_x, min_y, max_y, center: bool):
+
         if center:
             self.key = node.getKey()
             self.x = ((node.getLocation()[0] - min_x) / (max_x - min_x)) * SCREEN_WIDTH
@@ -405,6 +406,7 @@ def reset(graph, min_x, max_x, min_y, max_y):
                 ln = line(ball_i, j, False)
                 graph.lines_in.append(ln)
 
+
 def notInt():
     q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     font = pygame.font.Font(None, 32)
@@ -425,6 +427,7 @@ def notInt():
     q.fill((200, 210, 200))
     pygame.display.flip()
     clock.tick(30)
+
 
 def notEnough():
     q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -447,6 +450,7 @@ def notEnough():
     pygame.display.flip()
     clock.tick(30)
 
+
 def nodeIsNotIn():
     q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     font = pygame.font.Font(None, 32)
@@ -468,6 +472,7 @@ def nodeIsNotIn():
     pygame.display.flip()
     clock.tick(30)
 
+
 def notInG():
     q = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     font = pygame.font.Font(None, 32)
@@ -488,6 +493,7 @@ def notInG():
     q.fill((200, 210, 200))
     pygame.display.flip()
     clock.tick(30)
+
 
 def read(graph: GraphAlgo):
     nodes = []
@@ -670,5 +676,3 @@ def plot(graph: GraphAlgo):
 
         pygame_widgets.update(events)
         pygame.display.flip()
-
-
