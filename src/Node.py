@@ -13,12 +13,14 @@ class Node:
         s = "{}: |edges out| {} |edges in| {}".format(self._key, len(self._edgesFromNode), len(self._edgesToNode))
         return s
 
+    # this function adds an edge to the relevant list of the node (depend on the type of the edge - in or out)
     def addEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
             self._edgesFromNode[edge.getDestNode()] = edge.getWeight()
         elif edge.getDestNode() == self._key:
             self._edgesToNode[edge.getSrcNode()] = edge.getWeight()
 
+    # this function removes an edge of the relevant list of the node (depend on the type of the edge - in or out)
     def removeEdge(self, edge: Edge):
         if edge.getSrcNode() == self._key:
             del self._edgesFromNode[edge.getDestNode()]

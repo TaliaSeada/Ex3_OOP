@@ -16,27 +16,34 @@ from src.Node import Node
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, copy=None):
+        # default
         if not copy:
             self._graph = DiGraph()
             self._revGraph = DiGraph()
+            # for GUI
             self.nodes = []
             self.balls = []
             self.lines_in = []
             self.lines_out = []
+        # copy
         else:
             self._graph = copy
             self._revGraph = copy.reverse_graph(copy)
+            # for GUI
             self.nodes = []
             self.balls = []
             self.lines_in = []
             self.lines_out = []
 
+    # returns the graph
     def get_graph(self) -> GraphInterface:
         return self._graph
 
+    # returns the reversed graph
     def get_revGraph(self) -> GraphInterface:
         return self._revGraph
 
+    # this function returns the index of the minimum distance in a given list of distances
     def min_index(self, srcNode, dist_v, node_lst, passed):
         min = float('inf')
         index = 0
@@ -107,39 +114,51 @@ class GraphAlgo(GraphAlgoInterface):
         # bfs from a node, reverse edges, again bfs from the same node
         # if we got integer smaller than infinity in both, it means the graph is strongly connected
         key = 0
+        # get the node we want to check from
         for i in self._graph.get_all_v().keys():
             key = i
             break
+        # run bfs on it
         bfs = self.bfs(key, self._graph)
+        # if the result is infinity then the graph is not connected
         if bfs == float('inf'):
             return False
+        # else reverse the graph and check from the same node
         bfs_rev = self.bfs(key, self._revGraph)
+        # if the result is infinity then the graph is not connected
         if bfs_rev == float('inf'):
             return False
+        # is the distance is not infinity then the graph is connected
         return True
 
     def centerPoint(self) -> (int, float):
+        # if the graph is connected
         if self.isConnected():
             minDist = float('inf')
             minIndex = -1
+            # run the dijkstra algorithm then take the max value of the
+            # minimum values (distances that returned from the dijkstra algorithm)
             for v in self._graph.get_all_v().keys():
-                # print(v)
                 dist, path = self.dijkstra(v)
                 if max(dist.values()) < minDist:
                     minDist = max(dist.values())
                     minIndex = int(v)
+            # return the node and the distance
             return minIndex, minDist
+        # if the graph is not connected we cant have a center
         else:
             return -1, float('inf')
 
     def load_from_json(self, file_name: str) -> bool:
+        # load files using the build in library json
         try:
             file = open(file_name)
             data = json.load(file)
             counter = 0
+            # define nodes
             for i in data["Nodes"]:
                 id = int(i['id'])
-                # print("node num: " + str(id))
+                # if pos is given
                 if i.get('pos') is not None:
                     pos = i['pos']
                     xyz = pos.split(',')
@@ -147,14 +166,15 @@ class GraphAlgo(GraphAlgoInterface):
                         xyz[i] = float(xyz[i])
                     self._graph.add_node(id, xyz)
                     self._revGraph.add_node(id, xyz)
+                # if pos is not given define random pos
                 else:
                     x = random.randint(0, 9)
                     y = random.randint(0, 9)
                     z = 0.0
                     self._graph.add_node(id, (x, y, z))
                     self._revGraph.add_node(id, (x, y, z))
+            # define edges
             for i in data["Edges"]:
-                # print("edge number: " + str(counter))
                 counter += 1
                 src = int(i["src"])
                 dest = int(i["dest"])
@@ -162,17 +182,20 @@ class GraphAlgo(GraphAlgoInterface):
                 self._graph.add_edge(src, dest, weight)
                 self._revGraph.add_edge(dest, src, weight)
             file.close()
-            # print("finished loading")
             return True
+        # if file does not exist
         except Exception as e:
             print(e)
             return False
 
     def save_to_json(self, file_name: str) -> bool:
+        # save files using the build in library json
         try:
             nodes = []
             edges = []
+            # create the dictionary for the saved file
             nodeDict = self._graph.get_all_v()
+            # add the nodes
             for node in nodeDict:
                 thisNode = nodeDict[node]
                 location = thisNode.getLocation()
@@ -183,32 +206,44 @@ class GraphAlgo(GraphAlgoInterface):
                 currNode = {"pos": (str(x) + "," + str(y) + "," + str(z)), "id": id}
                 nodes.append(currNode)
                 allOutEdges = self._graph.all_out_edges_of_node(id)
+                # add the edges
                 for edge in allOutEdges.keys():
                     src = id
                     dest = edge
                     weight = allOutEdges[edge]
                     edgeCurr = {"src": id, "w": weight, "dest": dest}
                     edges.append(edgeCurr)
+            # combine
             all = {"Edges": edges, "Nodes": nodes}
+            # write to the file
             with open(file_name, "w") as file:
                 file.write(json.dumps(all, indent=4))
             file.close()
             return True
+        # if save did not succeeded throw an exception
         except Exception as e:
             print(e)
             return False
 
     def dijkstra(self, src: int):
-        # print(src)
+        # this function gets a source nodes and calculates the shortest path from it to every other
+        # node on the graph, and returns the distances, and also the last node that we got from to
+        # every other node
+
         Distances = {}
         lastPath = {}
+        # define all distances to be infinity and all nodes in path to be None
         for v in self._graph.get_all_v():
             Distances[v] = float('inf')
             lastPath[v] = None
+        # the distance between node to itself is 0, so add the first node's distance
         Distances[src] = 0
         h = []
         all_v = self._graph.get_all_v()
+        # then add the node to the heap
         heappush(h, (Distances[src], src))
+        # run over the nodes and get the shortest path by comparing the weights of the edges
+        # update if there is shorter path, and note every node we visit as visited
         while h:
             currNode = heappop(h)[1]
             all_v.get(currNode).setTag(2)
@@ -221,25 +256,35 @@ class GraphAlgo(GraphAlgoInterface):
                         heappush(h, (newDist, edge))
                         Distances[edge] = newDist
                         lastPath[edge] = currNode
+        # reset the tags of the nodes
         for v in all_v:
             all_v.get(v).setTag(0)
+        # return the shortest distance and the path of it
         return Distances, lastPath
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
+        # if the nodes exist in the graph
         if self._graph.get_all_v().__contains__(id1) and self._graph.get_all_v().__contains__(id2):
             p = []
+            # use dijkstra
             dist, path = self.dijkstra(id1)
+            # if node1 is not connected to node2 the shortest path would be infinity
             if dist[id2] == float('inf'):
                 return float('inf'), p
+            # else find the path between the two nodes
             id = id2
             p.append(id)
+            # run over the path from one node to the other and add the nodes its go through
             while int(id) != id1:
                 p.append(int(path[id]))
                 id = path[id]
+            # reverse the result and return it
             p.reverse()
             return dist[id2], p
+        # if nodes does not exist return infinity and empty path
         return float('inf'), []
 
+    # use the plotGraph we build to plot the graph
     def plot_graph(self) -> None:
         plot(self)
 
@@ -552,6 +597,7 @@ def plot(graph: GraphAlgo):
     min_y = float('inf')
     max_y = - float('inf')
 
+    # set the min and max values to set the scale
     for i in graph.get_graph().get_all_v().keys():
         if graph.get_graph().get_all_v().get(i).getLocation()[0] < min_x:
             min_x = graph.get_graph().get_all_v().get(i).getLocation()[0]
@@ -568,6 +614,7 @@ def plot(graph: GraphAlgo):
         if graph.get_graph().get_all_v().get(i).getLocation()[1] > max_y:
             max_y = graph.get_graph().get_all_v().get(i).getLocation()[1]
 
+    # define the screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     pygame.display.set_caption("menu")
 
