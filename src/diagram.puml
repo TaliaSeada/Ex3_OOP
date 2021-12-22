@@ -13,6 +13,11 @@ plotGraph o-- Node
 plotGraph o-- circle
 plotGraph o-- line
 
+interface GraphInterface
+interface GraphAlgoInterface
+
+GraphInterface <|-- DiGraph
+GraphAlgoInterface <|-- GraphAlgo
 
 class main{
 +check

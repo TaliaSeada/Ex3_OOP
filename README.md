@@ -162,8 +162,15 @@ In this class we run all the classes.
 6. __runAlgoAndWrite(fileName)__ - Takes results and write it to a file
 7. __main__ - calls the check() and the check3() functions
 
+### GUI:
+When running the plot_graph() in the GraphAlgo class we get here. <br>
+How to use the buttons:
+1. Reset changes button : This button reset the graph to the default 
+2. Center button : This button prints the center node on the graph.
+3. 
+
 ### Diagram:
-![](src/diagram.png)
+
 ### Results:
    
 
