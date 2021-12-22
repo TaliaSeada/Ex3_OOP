@@ -1,3 +1,4 @@
+import math
 from heapq import *
 from typing import List
 import json
@@ -293,6 +294,42 @@ class GraphAlgo(GraphAlgoInterface):
 SCREEN_WIDTH = 1300
 SCREEN_HEIGHT = 800
 
+# set the arrows to the graph
+def drawArrowLine(screen, x1, y1, x2, y2, d, h):
+    dx = x2 - x1
+    dy = y2 - y1
+    D = math.sqrt(dx * dx + dy * dy)
+    xm = D - 3.5
+    xn = xm
+    ym = h
+    yn = (0 - h)
+    sin = dy / D
+    cos = dx / D
+    x = xm * cos - ym * sin + x1
+    ym = xm * sin + ym * cos + y1
+    xm = x
+    x = xn * cos - yn * sin + x1
+    yn = xn * sin + yn * cos + y1
+    xn = x
+    newX2 = (xm + xn) / 2
+    newY2 = (ym + yn) / 2
+    dx1 = newX2 - x1
+    dy1 = newY2 - y1
+    D1 = math.sqrt(dx1 * dx1 + dy1 * dy1)
+    xm1 = D1 - d
+    xn1 = xm1
+    ym1 = h
+    yn1 = 0 - h
+    sin1 = dy1 / D1
+    cos1 = dx1 / D1
+    nx = xm1 * cos1 - ym1 * sin1 + x1
+    ym1 = xm1 * sin1 + ym1 * cos1 + y1
+    xm1 = nx
+    nx = xn1 * cos1 - yn1 * sin1 + x1
+    yn1 = xn1 * sin1 + yn1 * cos1 + y1
+    xn1 = nx
+    points = [(newX2, newY2), (xm1, ym1), (xn1, yn1)]
+    pygame.draw.polygon(screen, (0, 0, 0), points)
 
 class circle:
     def __init__(self, node: Node, min_x, max_x, min_y, max_y, center: bool):
@@ -327,18 +364,7 @@ class line:
 
     def drawLine(self, screen, inOut):
         pygame.draw.line(screen, self.color, self._src, self._dest, 2)
-        size = 4
-        if inOut == "out":
-            x = (self._dest[0], self._dest[1])
-            y = (self._dest[0] + size, self._dest[1] - size)
-            z = (self._dest[0] + size, self._dest[1] + size)
-            pygame.draw.polygon(screen, (0, 0, 0), [x, y, z])
-
-        if inOut == "in":
-            x = (self._dest[0] - size, self._dest[1] - size)
-            y = (self._dest[0] - size, self._dest[1] + size)
-            z = (self._dest[0], self._dest[1])
-            pygame.draw.polygon(screen, (0, 0, 0), [x, y, z])
+        drawArrowLine(screen, self._src[0], self._src[1], self._dest[0], self._dest[1], 7, 4)
 
 
 def getBall(balls, node):
