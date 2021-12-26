@@ -35,3 +35,8 @@ if you want to run check and check3, you will need to uncomment it and comment t
 Or you can choose a graph from the data folder to load using the file line, or an entirely new graph using the whole path to the json file representing it.
 
 ## DO NOT REMOVE THE PYGAME.INIT() OR PYGAME.QUIT() LINES
+
+
+### Results 
+
+![](https://github.com/TaliaSeada/Ex3_OOP/blob/master/plotPics/java-results.jpeg)
