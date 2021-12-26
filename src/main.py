@@ -166,47 +166,11 @@ def runAlgoAndWrite(fileName):
 
 if __name__ == '__main__':
     pygame.init()
-    check()
-    check3()
+    # check()
+    # check3()
+
+    ga = GraphAlgo()
+    file = "../data/A5.json"
+    ga.load_from_json(file)
+    ga.plot_graph()
     pygame.quit()
-
-    # df = pd.DataFrame(columns=["Name", "Load", "Center", "TSP 10 nodes", "TSP 100 nodes", "TSP 1000 nodes", "TSP 10000 nodes"])
-    # df.to_csv('../data/resultsT.csv', index=False)
-    # df = pd.read_csv('../data/resultsT.csv')
-
-    # ga = GraphAlgo()
-    #
-    # file = "C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\G1.json"
-    # ga.load_from_json(file)
-    # start_time = time.time_ns()
-    # ga.save_to_json("test.json")
-    # end_time = time.time_ns()
-    # print("time to save " + file + " : " + str((end_time-start_time)))
-    #
-    # file = "C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\G2.json"
-    # ga.load_from_json(file)
-    # start_time = time.time_ns()
-    # ga.save_to_json("test.json")
-    # end_time = time.time_ns()
-    # print("time to save " + file + " : " + str((end_time-start_time)))
-    #
-    # file = "C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\G3.json"
-    # ga.load_from_json(file)
-    # start_time = time.time_ns()
-    # ga.save_to_json("test.json")
-    # end_time = time.time_ns()
-    # print("time to save " + file + " : " + str((end_time-start_time)))
-    #
-    # file = "C:\\Users\\talia\\PycharmProjects\\Ex3_OOP\\data\\1000Nodes.json"
-    # ga.load_from_json(file)
-    # start_time = time.time_ns()
-    # ga.save_to_json("test.json")
-    # end_time = time.time_ns()
-    # print("time to save " + file + " : " + str((end_time-start_time)))
-    #
-    # file = "C:\\10000Nodes.json"
-    # ga.load_from_json(file)
-    # start_time = time.time_ns()
-    # ga.save_to_json("test.json")
-    # end_time = time.time_ns()
-    # print("time to save " + file + " : " + str((end_time-start_time)))
