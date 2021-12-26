@@ -23,8 +23,15 @@ How to use the buttons:
 
 ### Diagram:
 ![](src/diagram.png)
-### Results:
-Time of running each algorithm in each graph (name), when time is in nanoseconds.
-![image](https://user-images.githubusercontent.com/78349342/147124465-aa80df58-ad2c-4c66-b5fe-a5eabb56d8b0.png)
 
+### Download and Run
+To get this project you need to clone it into a Pycharm project.
 
+Next, to run it, you need to go to main.py file where you will see this:
+
+![](https://github.com/LiorBreitman8234/Ex2_oop/blob/master/data/main.jpeg)
+
+if you want to run check and check3, you will need to uncomment it and comment the lines from: ga = GraphAlgo() to ga.plot_graph()
+Or you can choose a graph from the data folder to load using the file line, or an entirely new graph using the whole path to the json file representing it.
+
+## DO NOT REMOVE THE PYGAME.INIT() OR PYGAME.QUIT() LINES
