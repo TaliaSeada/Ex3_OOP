@@ -148,7 +148,7 @@ class GraphAlgo(GraphAlgoInterface):
             return minIndex, minDist
         # if the graph is not connected we cant have a center
         else:
-            return -1, float('inf')
+            return (None, float('inf'))
 
     def load_from_json(self, file_name: str) -> bool:
         # load files using the build in library json
