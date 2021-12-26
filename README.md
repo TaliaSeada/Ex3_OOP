@@ -39,4 +39,10 @@ Or you can choose a graph from the data folder to load using the file line, or a
 
 ### Results 
 
-![](https://github.com/TaliaSeada/Ex3_OOP/blob/master/plotPics/java_results.png)
+![](https://github.com/TaliaSeada/Ex3_OOP/blob/master/plotPics/python_results.png)
+
+The algorithms were ran on the a computer with the following specs:
+
+Processor	Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz   2.30 GHz
+Installed RAM	8.00 GB (7.79 GB usable)
+System type	64-bit operating system, x64-based processor
