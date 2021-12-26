@@ -39,4 +39,4 @@ Or you can choose a graph from the data folder to load using the file line, or a
 
 ### Results 
 
-![](https://github.com/TaliaSeada/Ex3_OOP/blob/master/plotPics/java_results.jpeg)
+![](https://github.com/TaliaSeada/Ex3_OOP/blob/master/plotPics/java_results.png)
