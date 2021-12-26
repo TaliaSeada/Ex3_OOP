@@ -4,7 +4,11 @@ This Project made by: Talia Seada (ID: 211551601) and Lior Breitman (ID: 2127332
 __NOTE:__ In this projects the group members used "Code With Me" in the Pycharm workspace, so most of the commits are
 from one main computer, while all the members were working on the project together.
 ## Intro:
-This project is about Weighted Directional Graphs. <br>
+This is the 4th assignment on our OOP course as part of our B.sc in computer science
+In this assignment, we were asked to implement 3 graph theory algorithms: TSP, shortest path, and Center Point
+We implemented a DiGraph class where the directed graph is represented using a dictionary of nodes and a list of edges
+To implement all the algorithms we added 2 more algorithms, Dijkstra and BFS: Dijkstra for the shortest path between nodes, and BFS to check if the graph is strongly connected so we can search for a center.
+The last part was the GUI which we implemented using PyGame. In the Gui, you can see the graph as well as run algorithms on It to see the results <br>
 For more information - https://github.com/benmoshe/OOP_2021/tree/main/Assignments/Ex3 <br>
 
 ### The main Task:
