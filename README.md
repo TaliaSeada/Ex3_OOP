@@ -11,9 +11,7 @@ To implement all the algorithms we added 2 more algorithms, Dijkstra and BFS: Di
 The last part was the GUI which we implemented using PyGame. In the Gui, you can see the graph as well as run algorithms on It to see the results <br>
 For more information - https://github.com/benmoshe/OOP_2021/tree/main/Assignments/Ex3 <br>
 
-### The main Task:
 The main task of this project is to run and display algorithms on Directed Weighted Graphs.
-We achieved it by implementing these four main algorithms: <br>
 
 ### GUI:
 When running the plot_graph() in the GraphAlgo class we get here. <br>
