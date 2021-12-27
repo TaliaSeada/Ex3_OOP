@@ -377,7 +377,7 @@ def getBall(balls, node):
 
 def center(graph, screen, min_x, max_x, min_y, max_y, balls):
     node, dist = graph.centerPoint()
-    if node != -1:
+    if node != None:
         ball = circle(graph.get_graph().get_all_v().get(node), min_x, max_x, min_y, max_y, True)
         ind = getBall(balls, graph.get_graph().get_all_v().get(node))
         balls[ind] = ball
