@@ -1,8 +1,4 @@
 # Third Assignment - OOP Course
-## Credits:
-This Project made by: Talia Seada (ID: 211551601) and Lior Breitman (ID: 212733257). <br>
-__NOTE:__ In this projects the group members used "Code With Me" in the Pycharm workspace, so most of the commits are
-from one main computer, while all the members were working on the project together.
 ## Intro:
 This is the 4th assignment on our OOP course as part of our B.sc in computer science
 In this assignment, we were asked to implement 3 graph theory algorithms: TSP, shortest path, and Center Point
